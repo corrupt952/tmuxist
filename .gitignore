@@ -1,0 +1,6 @@
+tmuxist
+vendor/
+pkg/
+
+# direnv
+.envrc

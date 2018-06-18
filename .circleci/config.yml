@@ -1,0 +1,48 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: golang:1.10
+    working_directory: /go/src/github.com/corrupt952/tmuxist
+    steps:
+      - run: go get -u github.com/golang/dep/cmd/dep
+      - checkout
+      - restore_cache:
+          keys:
+            - dep-{{ checksum "Gopkg.lock" }}
+            - dep-
+      - run: make test
+      - save_cache:
+          key: dep-{{ checksum "Gopkg.lock" }}
+          paths:
+            - "vendor/"
+  build:
+    docker:
+      - image: golang:1.10
+    working_directory: /go/src/github.com/corrupt952/tmuxist
+    environment:
+      BUILD_GOOS: darwin
+      BUILD_GOARCH: amd64
+      CGO_ENABLED: 1
+    steps:
+      - run: go get -u github.com/golang/dep/cmd/dep github.com/mitchellh/gox
+      - checkout
+      - restore_cache:
+          keys:
+            - dep-{{ checksum "Gopkg.lock" }}
+            - dep-
+      - run: make build
+      - save_cache:
+          key: dep-{{ checksum "Gopkg.lock" }}
+          paths:
+            - "vendor/"
+      - store_artifacts:
+          path: pkg
+workflows:
+  version: 2
+  test_and_build:
+    jobs:
+      - test
+      - build:
+          requires:
+            - test
