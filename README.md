@@ -44,6 +44,15 @@ tmuxist start
 tmuxist start -profile your_profile
 ```
 
+### tmuxist output
+Ouput tmuxist configuration.
+
+```sh
+tmuxist output
+# or, with profile name
+tmuxist output -profile your_profile
+```
+
 
 ## Configuration
 
