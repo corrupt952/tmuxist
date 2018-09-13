@@ -31,6 +31,8 @@ Edit configuration.
 tmuxist edit
 # or, with profile name
 tmuxist edit -profile your_profile
+# or, specify editor
+tmuxist edit -profile gvim
 ```
 
 ### tmuxist start
