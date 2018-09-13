@@ -1,9 +1,13 @@
+---
+
+defaults: &defaults
+  docker:
+    - image: golang:1.10
+  working_directory: /go/src/github.com/corrupt952/tmuxist
 version: 2
 jobs:
   test:
-    docker:
-      - image: golang:1.10
-    working_directory: /go/src/github.com/corrupt952/tmuxist
+    <<: *defaults
     steps:
       - run: go get -u github.com/golang/dep/cmd/dep
       - checkout
@@ -17,9 +21,7 @@ jobs:
           paths:
             - "vendor/"
   build:
-    docker:
-      - image: golang:1.10
-    working_directory: /go/src/github.com/corrupt952/tmuxist
+    <<: *defaults
     environment:
       BUILD_GOOS: darwin
       BUILD_GOARCH: amd64
@@ -31,18 +33,42 @@ jobs:
           keys:
             - dep-{{ checksum "Gopkg.lock" }}
             - dep-
-      - run: make build
+      - run: make package
       - save_cache:
           key: dep-{{ checksum "Gopkg.lock" }}
           paths:
             - "vendor/"
+      - persist_to_workspace:
+          root: .
+          paths:
+            - Makefile
+            - pkg/tmuxist_*
       - store_artifacts:
           path: pkg
+  release:
+    <<: *defaults
+    steps:
+      - run: go get -u github.com/tcnksm/ghr
+      - attach_workspace:
+          at: .
+      - run: make release
 workflows:
   version: 2
   test_and_build:
     jobs:
-      - test
+      - test:
+          filters:
+            tags:
+              only: /.*/
       - build:
-          requires:
-            - test
+          requires: [test]
+          filters:
+            tags:
+              only: /.*/
+      - release:
+          requires: [build]
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^\d+\.\d+\.\d+$/

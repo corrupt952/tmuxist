@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -11,11 +13,13 @@ import (
 	"strings"
 	"syscall"
 	"text/template"
-	"bytes"
-	"fmt"
 
-	"github.com/pelletier/go-toml"
 	"github.com/google/subcommands"
+	"github.com/pelletier/go-toml"
+)
+
+var (
+	version	string
 )
 
 const (
@@ -213,6 +217,41 @@ func (cmd *startCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{
 	return subcommands.ExitSuccess
 }
 
+// version commands
+type versionCmd struct{}
+
+func (*versionCmd) Name() string {
+	return "version"
+}
+func (*versionCmd) Synopsis() string {
+	return "Print tmuxist version"
+}
+func (*versionCmd) Usage() string {
+	return "version: tmuxist version\n"
+}
+func (*versionCmd) SetFlags(f *flag.FlagSet) {
+}
+func (*versionCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+	fmt.Print(version)
+	return subcommands.ExitSuccess
+}
+
+func main() {
+	initLogger()
+
+	subcommands.Register(subcommands.HelpCommand(), "")
+	subcommands.Register(subcommands.CommandsCommand(), "")
+	subcommands.Register(&initCmd{}, "")
+	subcommands.Register(&editCmd{}, "")
+	subcommands.Register(&outputCmd{}, "")
+	subcommands.Register(&startCmd{}, "")
+	subcommands.Register(&versionCmd{}, "")
+
+	flag.Parse()
+	ctx := context.Background()
+	os.Exit(int(subcommands.Execute(ctx)))
+}
+
 func getConfigurationPath(profile string) (string, error) {
 	fpath, err := absolutePath(filepath.Join(CONFIG_DIR_PATH, profile+".toml"))
 	if err != nil {
@@ -243,19 +282,4 @@ func absolutePath(path string) (string, error) {
 	}
 
 	return strings.Replace(path, "~", usr.HomeDir, 1), nil
-}
-
-func main() {
-	initLogger()
-
-	subcommands.Register(subcommands.HelpCommand(), "")
-	subcommands.Register(subcommands.CommandsCommand(), "")
-	subcommands.Register(&initCmd{}, "")
-	subcommands.Register(&editCmd{}, "")
-	subcommands.Register(&outputCmd{}, "")
-	subcommands.Register(&startCmd{}, "")
-
-	flag.Parse()
-	ctx := context.Background()
-	os.Exit(int(subcommands.Execute(ctx)))
 }

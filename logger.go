@@ -1,9 +1,9 @@
 package main
 
 import (
-	"os"
-	"log"
 	"github.com/hashicorp/logutils"
+	"log"
+	"os"
 )
 
 // logging
