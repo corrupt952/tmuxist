@@ -9,6 +9,7 @@
 * kill profile
 * delete profile
 * log level
+* sync option to window
 ### circleci
 * build automation
 ### test
