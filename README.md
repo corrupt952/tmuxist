@@ -14,6 +14,15 @@
 * config
 * logger
 
+## Installation
+Download tar.gz on [Latest release](https://github.com/corrupt952/tmuxist/releases/latest).
+
+### Homebrew
+```sh
+brew tap corrupt952/tmuxist
+brew install tmuxist
+```
+
 ## Commands
 ### tmuxist init
 Initialize configuration.
