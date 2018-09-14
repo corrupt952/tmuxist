@@ -29,7 +29,7 @@ root = "{{.Root}}"
 Attach = {{.Attach}}
 
 [[windows]]
-[[windows.pane]]
+[[windows.panes]]
 command = "echo 'hello'"`
 )
 
