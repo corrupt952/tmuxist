@@ -45,6 +45,7 @@ func (c *Config) ToScript() string {
 type Window struct {
 	Panes  []Pane
 	Layout string
+	Sync   *bool
 }
 
 func (w *Window) ToScript(isFirst bool) string {
@@ -64,11 +65,15 @@ func (w *Window) ToScript(isFirst bool) string {
 		s += fmt.Sprintf("tmux select-layout %s\n", w.Layout)
 	}
 
+	if w.Sync != nil && *w.Sync {
+		s += "tmux set sync on\n"
+	}
+
 	return s + "\n"
 }
 
 type Pane struct {
-	Command  string
+	Command string
 }
 
 func (p *Pane) ToScript(isFirst bool) string {

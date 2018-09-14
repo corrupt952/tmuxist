@@ -26,7 +26,7 @@ const (
 	CONFIG_DIR_PATH = "~/.config/tmuxist"
 	CONFIG_TEMPLATE = `name = "{{.Name}}"
 root = "{{.Root}}"
-Attach = {{.Attach}}
+attach = {{.Attach}}
 
 [[windows]]
 [[windows.panes]]

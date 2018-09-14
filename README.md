@@ -86,7 +86,8 @@ cd ~/Repo/corrupt952/tmuxist
 [[windows.panes]]
 
 [[windows]]
-Layout = "tiled"
+layout = "tiled"
+sync = true
 [[windows.panes]]
 [[windows.panes]]
 [[windows.panes]]
