@@ -43,7 +43,8 @@ func (c *Config) ToScript() string {
 }
 
 type Window struct {
-	Panes []Pane
+	Panes  []Pane
+	Layout string
 }
 
 func (w *Window) ToScript(isFirst bool) string {
@@ -59,11 +60,15 @@ func (w *Window) ToScript(isFirst bool) string {
 		s += p.ToScript(i == 0)
 	}
 
+	if w.Layout != "" {
+		s += fmt.Sprintf("tmux select-layout %s\n", w.Layout)
+	}
+
 	return s + "\n"
 }
 
 type Pane struct {
-	Command string
+	Command  string
 }
 
 func (p *Pane) ToScript(isFirst bool) string {

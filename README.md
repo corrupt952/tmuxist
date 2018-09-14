@@ -4,9 +4,10 @@
 
 ## TODO
 ### main
-* layout
 * list profiles
 * attach profile
+* kill profile
+* delete profile
 * log level
 ### circleci
 * build automation
@@ -84,6 +85,9 @@ cd ~/Repo/corrupt952/tmuxist
 [[windows.panes]]
 
 [[windows]]
+Layout = "tiled"
+[[windows.panes]]
+[[windows.panes]]
 [[windows.panes]]
 [[windows.panes]]
 ```

@@ -19,7 +19,7 @@ import (
 )
 
 var (
-	version	string
+	version string
 )
 
 const (
