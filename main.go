@@ -26,7 +26,7 @@ const (
 	CONFIG_DIR_PATH = "~/.config/tmuxist"
 	CONFIG_TEMPLATE = `name = "{{.Name}}"
 root = "{{.Root}}"
-Attach = {{.Attach}}
+attach = {{.Attach}}
 
 [[windows]]
 [[windows.panes]]
@@ -142,37 +142,38 @@ func (cmd *editCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}
 	return subcommands.ExitSuccess
 }
 
-// output commands
-type outputCmd struct {
+// print commands
+type printCmd struct {
 	profile string
 }
 
-func (*outputCmd) Name() string {
-	return "output"
+func (*printCmd) Name() string {
+	return "print"
 }
-func (*outputCmd) Synopsis() string {
-	return "output tmuxist configuration"
+func (*printCmd) Synopsis() string {
+	return "print tmuxist configuration"
 }
-func (*outputCmd) Usage() string {
-	return "output: tmuxist output [-profile profile]\n"
+func (*printCmd) Usage() string {
+	return "print: tmuxist print [-profile profile]\n"
 }
-func (cmd *outputCmd) SetFlags(f *flag.FlagSet) {
+func (cmd *printCmd) SetFlags(f *flag.FlagSet) {
 	f.StringVar(&cmd.profile, "profile", "default", "Profile")
 }
-func (cmd *outputCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-	cfgPath, err := getConfigurationPath(cmd.profile)
+func (cmd *printCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+	fpath, err := getConfigurationPath(cmd.profile)
 	if err != nil {
 		logger.err(err.Error())
 		return subcommands.ExitFailure
 	}
 
-	content, err := ioutil.ReadFile(cfgPath)
+	c, err := loadConfiguration(fpath)
+	_, err = loadConfiguration(fpath)
 	if err != nil {
 		logger.err(err.Error())
 		return subcommands.ExitFailure
 	}
 
-	fmt.Printf("%s", content)
+	fmt.Printf("%s", c.ToScript())
 
 	return subcommands.ExitSuccess
 }
@@ -237,13 +238,13 @@ func (*versionCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{})
 }
 
 func main() {
-	initLogger()
+	logger.setup(os.Stderr)
 
 	subcommands.Register(subcommands.HelpCommand(), "")
 	subcommands.Register(subcommands.CommandsCommand(), "")
 	subcommands.Register(&initCmd{}, "")
 	subcommands.Register(&editCmd{}, "")
-	subcommands.Register(&outputCmd{}, "")
+	subcommands.Register(&printCmd{}, "")
 	subcommands.Register(&startCmd{}, "")
 	subcommands.Register(&versionCmd{}, "")
 
