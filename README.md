@@ -6,10 +6,10 @@
 ### main
 * list profiles
 * attach profile
-* kill profile
+* kill tmux session by profile name
 * delete profile
 * log level
-* sync option to window
+* Add path option on Window,Pane configurations
 ### circleci
 * build automation
 ### test

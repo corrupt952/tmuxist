@@ -237,7 +237,7 @@ func (*versionCmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{})
 }
 
 func main() {
-	initLogger()
+	logger.setup(os.Stderr)
 
 	subcommands.Register(subcommands.HelpCommand(), "")
 	subcommands.Register(subcommands.CommandsCommand(), "")

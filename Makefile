@@ -25,7 +25,7 @@ fmt:
 	gofmt -w *.go
 
 test: dep
-	go test .
+	go test -v .
 
 clean:
 	rm -rf pkg/*

@@ -27,7 +27,7 @@ func (c *Config) ToScript() string {
 	if c.Name != "" {
 		name = fmt.Sprintf("-s %s", c.Name)
 	}
-	s += fmt.Sprintf("SESSION_NO=%s\n\n", quote(fmt.Sprintf("tmux new-session -dP %s", name)))
+	s += fmt.Sprintf("SESSION_NO=%s\n\n", commandSubstitution(fmt.Sprintf("tmux new-session -dP %s", name)))
 
 	for i, w := range c.Windows {
 		s += w.ToScript(i == 0)
@@ -54,7 +54,7 @@ func (w *Window) ToScript(isFirst bool) string {
 	if isFirst {
 		s += "WINDOW_NO=$SESSION_NO\n"
 	} else {
-		s += fmt.Sprintf("WINDOW_NO=%s\n", quote("tmux new-window -t $SESSION_NO -a -P"))
+		s += fmt.Sprintf("WINDOW_NO=%s\n", commandSubstitution("tmux new-window -t $SESSION_NO -a -P"))
 	}
 
 	for i, p := range w.Panes {
@@ -82,7 +82,7 @@ func (p *Pane) ToScript(isFirst bool) string {
 	if isFirst {
 		s += "PANE_NO=$WINDOW_NO\n"
 	} else {
-		s += fmt.Sprintf("PANE_NO=%s\n", quote("tmux split-window -t $WINDOW_NO -P"))
+		s += fmt.Sprintf("PANE_NO=%s\n", commandSubstitution("tmux split-window -t $WINDOW_NO -P"))
 	}
 
 	commands := strings.Split(p.Command, "\n")
@@ -95,12 +95,12 @@ func (p *Pane) ToScript(isFirst bool) string {
 	return s
 }
 
-func quote(s string) string {
+func commandSubstitution(s string) string {
 	shellEnv := os.Getenv("SHELL")
 	shell := filepath.Base(shellEnv)
 
 	switch shell {
-	case "zsh":
+	case "bash", "zsh":
 		return fmt.Sprintf("$(%s)", s)
 	default:
 		return fmt.Sprintf("`%s`", s)
