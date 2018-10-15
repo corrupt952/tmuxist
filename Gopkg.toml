@@ -26,6 +26,18 @@
 
 
 [[constraint]]
+  branch = "master"
+  name = "github.com/google/subcommands"
+
+[[constraint]]
+  name = "github.com/hashicorp/logutils"
+  version = "1.0.0"
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/kballard/go-shellquote"
+
+[[constraint]]
   name = "github.com/pelletier/go-toml"
   version = "1.2.0"
 

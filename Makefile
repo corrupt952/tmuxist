@@ -1,5 +1,5 @@
 VERSION ?= 0.0.4
-LDFLAGS	?= "-X main.version=${VERSION}"
+LDFLAGS	?= "-X github.com/corrupt952/tmuxist/version.Version=${VERSION}"
 
 all: build
 
@@ -22,10 +22,10 @@ run: dep
 	go run *.go
 
 fmt:
-	gofmt -w *.go
+	go fmt ./...
 
 test: dep
-	go test -v .
+	go test -v ./...
 
 clean:
 	rm -rf pkg/*

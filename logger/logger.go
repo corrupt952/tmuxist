@@ -1,4 +1,4 @@
-package main
+package logger
 
 import (
 	"io"
@@ -13,11 +13,11 @@ const (
 	LogLevelErr   = "ERROR"
 )
 
-var logger *Logger = &Logger{}
+var l *Logger = &Logger{}
 
 type Logger struct{}
 
-func (l *Logger) setup(w io.Writer) {
+func Setup(w io.Writer) {
 	filter := l.levelFilter(w)
 	log.SetOutput(filter)
 }
@@ -34,14 +34,14 @@ func (*Logger) logging(level, msg string) {
 	log.Printf("[" + level + "] " + msg)
 }
 
-func (l *Logger) debug(msg string) {
+func Debug(msg string) {
 	l.logging(LogLevelDebug, msg)
 }
 
-func (l *Logger) warn(msg string) {
+func Warn(msg string) {
 	l.logging(LogLevelWarn, msg)
 }
 
-func (l *Logger) err(msg string) {
+func Err(msg string) {
 	l.logging(LogLevelErr, msg)
 }
