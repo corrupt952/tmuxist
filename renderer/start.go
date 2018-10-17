@@ -10,10 +10,12 @@ import (
 	shell_helper "github.com/corrupt952/tmuxist/helper/shell"
 )
 
+// StartRenderer represents startup shell script.
 type StartRenderer struct {
 	Config *config.Config
 }
 
+// Render returns startup shell script.
 func (r *StartRenderer) Render() string {
 	s := ""
 	c := r.Config

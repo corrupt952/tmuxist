@@ -4,10 +4,11 @@ import (
 	"testing"
 )
 
-func AssertEquals(t *testing.T, r, e interface{}) {
+// AssertEquals asserts that two variables are equal.
+func AssertEquals(t *testing.T, actual, expected interface{}) {
 	t.Helper()
 
-	if r != e {
-		t.Fatalf("expected: %#v\nbut result: %v", e, r)
+	if actual != expected {
+		t.Fatalf("expected: %#v\nbut result: %v", expected, actual)
 	}
 }

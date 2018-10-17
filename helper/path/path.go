@@ -5,7 +5,8 @@ import (
 	"strings"
 )
 
-func AbsolutePath(path string) (string, error) {
+// Fullpath returns path converted to fullpath.
+func Fullpath(path string) (string, error) {
 	usr, err := user.Current()
 	if err != nil {
 		return "", err

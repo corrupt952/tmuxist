@@ -6,10 +6,12 @@ import (
 	"path/filepath"
 )
 
+// CurrentShell returns SHELL environment variables.
 func CurrentShell() string {
 	return os.Getenv("SHELL")
 }
 
+// CommandSubstitution returns command converted to command substitution.
 func CommandSubstitution(s string) string {
 	shell := filepath.Base(CurrentShell())
 
