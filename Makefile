@@ -1,5 +1,5 @@
 VERSION ?= 0.0.4
-LDFLAGS	?= "-X main.version=${VERSION}"
+LDFLAGS	?= "-X github.com/corrupt952/tmuxist/version.Version=${VERSION}"
 
 all: build
 
@@ -22,10 +22,13 @@ run: dep
 	go run *.go
 
 fmt:
-	gofmt -w *.go
+	go fmt ./...
 
 test: dep
-	go test -v .
+	go test -v ./...
+
+lint:
+	go list | xargs golint
 
 clean:
 	rm -rf pkg/*
@@ -33,3 +36,8 @@ clean:
 vars:
 	echo ${VERSION}
 	echo ${LDFLAGS}
+
+setup:
+	go get -u github.com/golang/dep/cmd/dep
+	go get -u github.com/mitchellh/gox
+	go get -u golang.org/x/lint/golint

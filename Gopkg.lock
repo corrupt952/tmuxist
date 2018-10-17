@@ -3,11 +3,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:b264547c40314ec7619d2cf264e2621953843be7242c140efe1e3119f93877f4"
+  digest = "1:df265b7f54410945dad5cf5979d91461b9fa7ff9b397ab58d2d577002a8a0e24"
   name = "github.com/google/subcommands"
   packages = ["."]
   pruneopts = "UT"
-  revision = "5bae204cdfb2d92dcc333d56014bae6a2f6c58b1"
+  revision = "46f0354f63152e8801bb460d26f5b6c4c878efbb"
 
 [[projects]]
   digest = "1:16ae35b3a854c667baaf55ff5d455c486f7c2baf040a2727f2ef0e4b096b2a95"
