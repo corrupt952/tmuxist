@@ -3,8 +3,6 @@ package command
 import (
 	"context"
 	"flag"
-	"os"
-	"syscall"
 
 	"github.com/google/subcommands"
 
@@ -54,7 +52,7 @@ func (cmd *StartCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interf
 	}
 
 	r := renderer.StartRenderer{c}
-	if err := syscall.Exec("/bin/sh", []string{shell_helper.CurrentShell(), "-c", r.Render()}, os.Environ()); err != nil {
+	if err := shell_helper.Exec(r.Render()); err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure
 	}

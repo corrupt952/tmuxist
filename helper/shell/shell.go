@@ -3,6 +3,7 @@ package shell
 import (
 	"fmt"
 	"os"
+	"syscall"
 	"path/filepath"
 )
 
@@ -21,4 +22,17 @@ func CommandSubstitution(s string) string {
 	default:
 		return fmt.Sprintf("`%s`", s)
 	}
+}
+
+// Exec executes command on current shell
+func Exec(command string) error {
+	return syscall.Exec(
+		"/bin/sh",
+		[]string{
+			CurrentShell(),
+			"-c",
+			command,
+		},
+		os.Environ(),
+	)
 }
