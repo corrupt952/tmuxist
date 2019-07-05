@@ -18,6 +18,7 @@ func main() {
 	subcommands.Register(&command.EditCommand{}, "")
 	subcommands.Register(&command.PrintCommand{}, "")
 	subcommands.Register(&command.StartCommand{}, "")
+	subcommands.Register(&command.KillCommand{}, "")
 	subcommands.Register(&command.VersionCommand{}, "")
 	subcommands.Register(subcommands.HelpCommand(), "")
 	subcommands.Register(subcommands.CommandsCommand(), "")
