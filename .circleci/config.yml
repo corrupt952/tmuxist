@@ -3,7 +3,7 @@ version: '2.1'
 defaults: &defaults
   docker:
   - image: golang:1.15
-  working_directory: /go/src/github.com/corrupt952/tmuxist
+  working_directory: /go/src/app
 
 workflows:
   version: 2
@@ -48,7 +48,7 @@ jobs:
       BUILD_GOARCH: amd64
       CGO_ENABLED: 1
     steps:
-    - run: go get -u github.com/golang/dep/cmd/dep github.com/mitchellh/gox
+    - run: go get -u github.com/mitchellh/gox
     - checkout
     - restore_cache:
         keys:

@@ -3,10 +3,7 @@ LDFLAGS	?= "-X github.com/corrupt952/tmuxist/version.Version=${VERSION}"
 
 all: build
 
-dep:
-	dep ensure
-
-build: dep
+build:
 	gox -ldflags=${LDFLAGS} -output="pkg/{{.OS}}_{{.Arch}}/{{.Dir}}" -osarch="darwin/amd64 linux/amd64 linux/386"
 
 package: build
@@ -17,14 +14,13 @@ package: build
 release:
 	@ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} pkg
 
-
-run: dep
+run:
 	go run *.go
 
 fmt:
 	go fmt ./...
 
-test: dep
+test:
 	go test -v ./...
 
 lint:
@@ -38,6 +34,5 @@ vars:
 	echo ${LDFLAGS}
 
 setup:
-	go get -u github.com/golang/dep/cmd/dep
 	go get -u github.com/mitchellh/gox
 	go get -u golang.org/x/lint/golint
