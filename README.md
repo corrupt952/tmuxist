@@ -5,8 +5,6 @@
 ## TODO
 ### main
 * list profiles
-* attach profile
-* kill tmux session by profile name
 * delete profile
 * log level
 * Add path option on Window,Pane configurations
