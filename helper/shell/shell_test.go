@@ -4,7 +4,7 @@ import (
 	"os"
 	"testing"
 
-	test_helper "github.com/corrupt952/tmuxist/helper/test"
+	test_helper "tmuxist/helper/test"
 )
 
 func TestCommandSubstitution(t *testing.T) {

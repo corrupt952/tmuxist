@@ -8,8 +8,8 @@ import (
 
 	"github.com/google/subcommands"
 
-	"github.com/corrupt952/tmuxist/config"
-	"github.com/corrupt952/tmuxist/logger"
+	"tmuxist/config"
+	"tmuxist/logger"
 )
 
 // EditCommand represents a edit configuration command.

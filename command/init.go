@@ -12,9 +12,9 @@ import (
 
 	"github.com/google/subcommands"
 
-	"github.com/corrupt952/tmuxist/config"
-	path_helper "github.com/corrupt952/tmuxist/helper/path"
-	"github.com/corrupt952/tmuxist/logger"
+	"tmuxist/config"
+	path_helper "tmuxist/helper/path"
+	"tmuxist/logger"
 )
 
 // InitCommand represents a create configuration command.

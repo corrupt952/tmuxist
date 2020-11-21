@@ -7,7 +7,7 @@ import (
 
 	"github.com/google/subcommands"
 
-	"github.com/corrupt952/tmuxist/version"
+	"tmuxist/version"
 )
 
 // VersionCommand represents a version command.

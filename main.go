@@ -7,8 +7,8 @@ import (
 
 	"github.com/google/subcommands"
 
-	"github.com/corrupt952/tmuxist/command"
-	"github.com/corrupt952/tmuxist/logger"
+	"tmuxist/command"
+	"tmuxist/logger"
 )
 
 func main() {

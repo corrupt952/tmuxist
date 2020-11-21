@@ -3,7 +3,7 @@ package renderer
 import (
 	"fmt"
 
-	"github.com/corrupt952/tmuxist/config"
+	"tmuxist/config"
 )
 
 // KillRenderer represents startup shell script.

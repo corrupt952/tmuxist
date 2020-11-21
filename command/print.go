@@ -7,9 +7,9 @@ import (
 
 	"github.com/google/subcommands"
 
-	"github.com/corrupt952/tmuxist/config"
-	"github.com/corrupt952/tmuxist/logger"
-	"github.com/corrupt952/tmuxist/renderer"
+	"tmuxist/config"
+	"tmuxist/logger"
+	"tmuxist/renderer"
 )
 
 // PrintCommand represents a print startup script command.

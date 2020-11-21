@@ -3,8 +3,8 @@ package renderer
 import (
 	"testing"
 
-	"github.com/corrupt952/tmuxist/config"
-	test_helper "github.com/corrupt952/tmuxist/helper/test"
+	"tmuxist/config"
+	test_helper "tmuxist/helper/test"
 )
 
 func TestKillRenderer_Render(t *testing.T) {

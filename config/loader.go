@@ -7,8 +7,8 @@ import (
 
 	"github.com/pelletier/go-toml"
 
-	path_helper "github.com/corrupt952/tmuxist/helper/path"
-	"github.com/corrupt952/tmuxist/logger"
+	path_helper "tmuxist/helper/path"
+	"tmuxist/logger"
 )
 
 const (

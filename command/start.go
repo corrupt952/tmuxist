@@ -6,10 +6,10 @@ import (
 
 	"github.com/google/subcommands"
 
-	"github.com/corrupt952/tmuxist/config"
-	shell_helper "github.com/corrupt952/tmuxist/helper/shell"
-	"github.com/corrupt952/tmuxist/logger"
-	"github.com/corrupt952/tmuxist/renderer"
+	"tmuxist/config"
+	shell_helper "tmuxist/helper/shell"
+	"tmuxist/logger"
+	"tmuxist/renderer"
 )
 
 // StartCommand represents a startup tmux session command.

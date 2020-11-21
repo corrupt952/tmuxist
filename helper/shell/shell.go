@@ -3,8 +3,8 @@ package shell
 import (
 	"fmt"
 	"os"
-	"syscall"
 	"path/filepath"
+	"syscall"
 )
 
 // CurrentShell returns SHELL environment variables.

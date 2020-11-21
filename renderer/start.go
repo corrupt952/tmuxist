@@ -6,8 +6,8 @@ import (
 
 	"github.com/kballard/go-shellquote"
 
-	"github.com/corrupt952/tmuxist/config"
-	shell_helper "github.com/corrupt952/tmuxist/helper/shell"
+	"tmuxist/config"
+	shell_helper "tmuxist/helper/shell"
 )
 
 // StartRenderer represents startup shell script.
