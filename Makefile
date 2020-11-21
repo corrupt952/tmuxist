@@ -1,4 +1,4 @@
-VERSION ?= 0.0.5
+VERSION ?= 0.0.6
 LDFLAGS	?= "-X github.com/corrupt952/tmuxist/version.Version=${VERSION}"
 
 all: build
