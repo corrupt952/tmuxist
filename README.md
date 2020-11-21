@@ -7,9 +7,7 @@
 * list profiles
 * delete profile
 * log level
-* Add path option on Window,Pane configurations
-### circleci
-* build automation
+* ADD TMUXIST_PROFILE environment variable
 ### test
 * config
 * logger
