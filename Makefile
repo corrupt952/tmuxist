@@ -4,7 +4,7 @@ export UID
 export GID
 
 VERSION ?= 0.0.7
-LDFLAGS	?= "-X github.com/corrupt952/tmuxist/version.Version=${VERSION}"
+LDFLAGS	?= "-X github.com/corrupt952/tmuxist/version.Version=$(VERSION)"
 
 all: build
 
@@ -43,7 +43,7 @@ ci_build:
 
 ci_package: ci_build
 	cd pkg \
-		&& find * -type d | xargs -I{} tar -zcvf tmuxist_${VERSION}_{}.tar.gz {}/tmuxist \
+		&& find * -type d | xargs -I{} tar -zcvf tmuxist_$(VERSION)_{}.tar.gz {}/tmuxist \
 		&& find * -type d | xargs -I{} rm -rf {}
 
 ci_release:
