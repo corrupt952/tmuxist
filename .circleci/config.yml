@@ -1,9 +1,10 @@
 version: '2.1'
 
-defaults: &defaults
-  docker:
-  - image: golang:1.15
-  working_directory: /go/src/app
+executors:
+  builder:
+    docker:
+    - image: circleci/golang:1.15
+    working_directory: /go/src/app
 
 workflows:
   version: 2
@@ -28,33 +29,33 @@ workflows:
 
 jobs:
   test:
-    <<: *defaults
+    executor: builder
     steps:
     - checkout
     - restore_cache:
         keys:
         - mod-{{ checksum "go.sum" }}
         - mod-
-    - run: make test
+    - run: make ci_test
     - save_cache:
         key: mod-{{ checksum "go.sum" }}
         paths:
         - "/go/pkg"
 
   build:
-    <<: *defaults
+    executor: builder
     environment:
       BUILD_GOOS: darwin
       BUILD_GOARCH: amd64
       CGO_ENABLED: 1
     steps:
-    - run: go get -u github.com/mitchellh/gox
     - checkout
+    - run: go get -u github.com/mitchellh/gox
     - restore_cache:
         keys:
         - mod-{{ checksum "go.sum" }}
         - mod-
-    - run: make package
+    - run: make ci_package
     - save_cache:
         key: mod-{{ checksum "go.sum" }}
         paths:
@@ -68,9 +69,9 @@ jobs:
         path: pkg
 
   release:
-    <<: *defaults
+    executor: builder
     steps:
     - run: go get -u github.com/tcnksm/ghr
     - attach_workspace:
         at: .
-    - run: make release
+    - run: make ci_release
