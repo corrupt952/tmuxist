@@ -34,7 +34,7 @@ func (*KillCommand) Usage() string {
 
 // SetFlags adds the flags for KillCommand to the specified set.
 func (cmd *KillCommand) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&cmd.profile, "profile", "default", "Profile")
+	f.StringVar(&cmd.profile, "profile", config.DefaultProfileName(), "Profile")
 }
 
 // Execute executes kill tmux session and returns an ExitStatus.

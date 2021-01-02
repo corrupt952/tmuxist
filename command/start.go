@@ -34,7 +34,7 @@ func (*StartCommand) Usage() string {
 
 // SetFlags adds the flags for StartCommand to the specified set.
 func (cmd *StartCommand) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&cmd.profile, "profile", "default", "Profile")
+	f.StringVar(&cmd.profile, "profile", config.DefaultProfileName(), "Profile")
 }
 
 // Execute executes startup tmux session and returns an ExitStatus.

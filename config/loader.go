@@ -16,6 +16,15 @@ const (
 	ConfigDirPath = "~/.config/tmuxist"
 )
 
+// DefaultProfileName returns "default" or TMUXIST_PROFILE.
+func DefaultProfileName() string {
+	p := os.Getenv("TMUXIST_PROFILE")
+	if p == "" {
+		p = "default"
+	}
+	return p
+}
+
 // LoadFile returns *config.Config by path.
 func LoadFile(path string) (*Config, error) {
 	f, err := ioutil.ReadFile(path)

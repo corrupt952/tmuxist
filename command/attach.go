@@ -34,7 +34,7 @@ func (*AttachCommand) Usage() string {
 
 // SetFlags adds the flags for AttachCommand to the specified set.
 func (cmd *AttachCommand) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&cmd.profile, "profile", "default", "Profile")
+	f.StringVar(&cmd.profile, "profile", config.DefaultProfileName(), "Profile")
 }
 
 // Execute executes attach tmux session and returns an ExitStatus.

@@ -35,7 +35,7 @@ func (*EditCommand) Usage() string {
 
 // SetFlags adds the flags for EditCommand to the specified set.
 func (cmd *EditCommand) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&cmd.profile, "profile", "default", "Profile")
+	f.StringVar(&cmd.profile, "profile", config.DefaultProfileName(), "Profile")
 	f.StringVar(&cmd.editor, "editor", "vim", "Editor")
 }
 

@@ -34,7 +34,7 @@ func (*PrintCommand) Usage() string {
 
 // SetFlags adds the flags for PrintCommand to the specified set.
 func (cmd *PrintCommand) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&cmd.profile, "profile", "default", "Profile")
+	f.StringVar(&cmd.profile, "profile", config.DefaultProfileName(), "Profile")
 }
 
 // Execute executes print startup script and returns an ExitStatus.

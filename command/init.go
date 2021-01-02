@@ -39,7 +39,7 @@ func (*InitCommand) Usage() string {
 
 // SetFlags adds the flags for InitCommand to the specified set.
 func (cmd *InitCommand) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&cmd.profile, "profile", "default", "Profile")
+	f.StringVar(&cmd.profile, "profile", config.DefaultProfileName(), "Profile")
 }
 
 // Execute executes create configuration and returns an ExitStatus.
