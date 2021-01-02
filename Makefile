@@ -3,7 +3,7 @@ GID = $(shell id -g)
 export UID
 export GID
 
-VERSION ?= 0.0.6
+VERSION ?= 0.0.7
 LDFLAGS	?= "-X github.com/corrupt952/tmuxist/version.Version=${VERSION}"
 
 all: build
