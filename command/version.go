@@ -6,8 +6,10 @@ import (
 	"fmt"
 
 	"github.com/google/subcommands"
+)
 
-	"tmuxist/version"
+var (
+	Version string
 )
 
 // VersionCommand represents a version command.
@@ -34,6 +36,6 @@ func (*VersionCommand) SetFlags(f *flag.FlagSet) {
 
 // Execute executes print version and returns an ExitStatus.
 func (*VersionCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-	fmt.Print(version.Version)
+	fmt.Println(Version)
 	return subcommands.ExitSuccess
 }
