@@ -20,11 +20,6 @@ jobs:
         with:
           go-version: 1.15
 
-      - name: Get current version from tag
-        id: version
-        run: |
-          echo "::set-output name=VERSION::$(echo $GITHUB_REF | cut -d '/' -f 3)"
-
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:
@@ -32,4 +27,3 @@ jobs:
           args: release --rm-dist
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          VERSION: ${{ steps.version.outputs.VERSION }}

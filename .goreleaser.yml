@@ -1,2 +1,2 @@
 builds:
-  - ldflags: -s -w -X "command.Version={{.Env.VERSION}}"
+  - ldflags: -s -w -X "command.Version={{.Version}}"
