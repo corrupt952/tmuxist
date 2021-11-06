@@ -1,0 +1,13 @@
+builds:
+  - ldflags: -s -w -X "tmuxist/command.Version={{.Version}}"
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+
+# Packging only binary
+# FYI: https://goreleaser.com/customization/archive/#packaging-only-the-binaries
+archives:
+  - files:
+      - none*

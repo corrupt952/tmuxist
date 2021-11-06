@@ -1,10 +1,14 @@
 VERSION ?= 0.0.7
-LDFLAGS ?= "-X github.com/corrupt952/tmuxist/version.Version=$(VERSION)"
+LDFLAGS ?= -ldflags "-s -w -X 'tmuxist/command.Version=$(VERSION)'"
 
-all: build
+ARGS = $(filter-out $@,$(MAKECMDGOALS))
+%:
+	@:
 
-build: clean
-	gox -ldflags=$(LDFLAGS) -output="pkg/{{.OS}}_{{.Arch}}/{{.Dir}}" -osarch="darwin/amd64 linux/amd64"
+all: run
+
+run:
+	go run $(LDFLAGS) . $(ARGS)
 
 fmt:
 	go fmt ./...
@@ -17,13 +21,3 @@ lint:
 
 clean:
 	@rm -rf pkg/*
-
-###
-# for CI
-package: build
-	cd pkg \
-		&& find * -type d | xargs -I{} tar -zcvf tmuxist_$(VERSION)_{}.tar.gz {}/tmuxist \
-		&& find * -type d | xargs -I{} rm -rf {}
-
-release:
-	ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${VERSION} pkg
