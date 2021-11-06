@@ -1,2 +1,7 @@
 builds:
   - ldflags: -s -w -X "tmuxist/command.Version={{.Version}}"
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
