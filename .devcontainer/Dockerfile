@@ -1,9 +1,9 @@
-FROM circleci/golang:1.15
+FROM golang:1.17
 
-RUN sudo apt-get update && \
-    sudo apt-get install -y --no-install-recommends tmux && \
-    sudo apt-get clean && \
-    sudo rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends tmux && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 ENV XDG_CACHE_HOME=/tmp/.cache
 ENV GO111MODULE on
