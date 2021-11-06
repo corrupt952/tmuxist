@@ -2,8 +2,8 @@ name: Release
 
 on:
   push:
-#     tags:
-#       - '*'
+    tags:
+      - '*'
 
 permissions:
   contents: write
@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: 1.15
+
+      - run: echo $GITHUB_REF
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
