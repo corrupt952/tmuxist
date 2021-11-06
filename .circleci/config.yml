@@ -36,7 +36,7 @@ jobs:
         keys:
         - mod-{{ checksum "go.sum" }}
         - mod-
-    - run: make ci_test
+    - run: make test
     - save_cache:
         key: mod-{{ checksum "go.sum" }}
         paths:
@@ -55,7 +55,7 @@ jobs:
         keys:
         - mod-{{ checksum "go.sum" }}
         - mod-
-    - run: make ci_package
+    - run: make package
     - save_cache:
         key: mod-{{ checksum "go.sum" }}
         paths:
@@ -74,4 +74,4 @@ jobs:
     - run: go get -u github.com/tcnksm/ghr
     - attach_workspace:
         at: .
-    - run: make ci_release
+    - run: make release

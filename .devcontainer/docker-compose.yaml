@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  app:
+    init: true
+    build: .
+    tty: true
+    stdin_open: true
+    command: /bin/bash
+    volumes:
+    - ..:/go/src/app

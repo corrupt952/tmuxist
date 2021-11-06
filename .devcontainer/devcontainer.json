@@ -1,0 +1,42 @@
+{
+  "name": "Go",
+  "workspaceFolder": "/go/src/app",
+  "dockerComposeFile": [
+    "docker-compose.yaml"
+  ],
+  "service": "app",
+  "settings": {
+    "terminal.integrated.profiles.linux": {
+      "bash (login)": {
+        "path": "bash",
+        "args": [
+          "-l"
+        ]
+      }
+    },
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "[go]": {
+      "editor.insertSpaces": false
+    },
+    "[makefile]": {
+      "editor.insertSpaces": false
+    },
+    "[dockerfile]": {
+      "editor.tabSize": 4,
+      "editor.quickSuggestions": {
+        "strings": true
+      }
+    },
+    "go.toolsManagement.checkForUpdates": "off",
+    "go.gopath": "/go",
+    "go.gocodeAutoBuild": true,
+    "go.formatTool": "gofmt",
+    "go.useLanguageServer": true,
+  },
+  "extensions": [
+    "golang.go",
+    "editorconfig.editorconfig",
+  ],
+}

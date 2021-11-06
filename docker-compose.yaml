@@ -1,9 +1,0 @@
-version: '3.7'
-
-services:
-  app:
-    init: true
-    build: .
-    user: "$UID:$GID"
-    volumes:
-    - .:/go/src/app
