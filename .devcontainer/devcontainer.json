@@ -36,7 +36,8 @@
     "go.useLanguageServer": true,
   },
   "extensions": [
-    "golang.go",
-    "editorconfig.editorconfig",
-  ],
+	"golang.go",
+	"editorconfig.editorconfig",
+	"esbenp.prettier-vscode"
+],
 }
