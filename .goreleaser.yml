@@ -1,2 +1,2 @@
 builds:
-  - ldflags: -s -w -X "command.Version={{.Version}}"
+  - ldflags: -s -w -X "tmuxist/command.Version={{.Version}}"
