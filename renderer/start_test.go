@@ -109,7 +109,7 @@ cd ~
 
 echo "hoge"
 `
-	p := config.Pane{command}
+	p := config.Pane{Command: command}
 
 	actual := r.renderPane(&p, true)
 	expected := `PANE_NO=$WINDOW_NO

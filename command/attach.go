@@ -56,7 +56,7 @@ func (cmd *AttachCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...inter
 		return subcommands.ExitFailure
 	}
 
-	r := renderer.AttachRenderer{c}
+	r := renderer.AttachRenderer{Config: c}
 	if err := shell_helper.Exec(r.Render()); err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure

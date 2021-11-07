@@ -10,7 +10,7 @@ import (
 	"tmuxist/config"
 	shell_helper "tmuxist/helper/shell"
 	"tmuxist/logger"
-	"tmuxist/renderer"
+	renderer "tmuxist/renderer"
 )
 
 // StartCommand represents a startup tmux session command.
@@ -56,7 +56,7 @@ func (cmd *StartCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interf
 		return subcommands.ExitFailure
 	}
 
-	r := renderer.StartRenderer{c}
+	r := renderer.StartRenderer{Config: c}
 	if err := shell_helper.Exec(r.Render()); err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure
