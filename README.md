@@ -12,6 +12,8 @@
 * logger
 
 ## Installation
+
+### Manual
 Download tar.gz on [Latest release](https://github.com/corrupt952/tmuxist/releases/latest).
 
 ### Homebrew
