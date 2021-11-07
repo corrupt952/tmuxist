@@ -1,6 +1,6 @@
 # tmuxist
 
-[![CircleCI](https://circleci.com/gh/corrupt952/tmuxist.svg?style=svg)](https://circleci.com/gh/corrupt952/tmuxist)
+[![Test](https://github.com/corrupt952/tmuxist/actions/workflows/test.yaml/badge.svg)](https://github.com/corrupt952/tmuxist/actions/workflows/test.yaml)
 
 ## TODO
 ### main
