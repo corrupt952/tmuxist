@@ -6,7 +6,6 @@ import (
 	"flag"
 	"io/ioutil"
 	"os"
-	"os/user"
 	"text/template"
 
 	"github.com/google/subcommands"
@@ -79,7 +78,7 @@ command = "echo 'hello'"`)
 		logger.Err(err.Error())
 		return subcommands.ExitFailure
 	}
-	usr, err := user.Current()
+	currentPath, err := os.Getwd()
 	if err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure
@@ -88,7 +87,7 @@ command = "echo 'hello'"`)
 	attach := true
 	err = tmpl.Execute(&buf, &config.Config{
 		Name:    cmd.profile,
-		Root:    usr.HomeDir,
+		Root:    currentPath,
 		Attach:  &attach,
 		Windows: []config.Window{},
 	})
