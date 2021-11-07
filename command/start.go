@@ -3,6 +3,7 @@ package command
 import (
 	"context"
 	"flag"
+	"os"
 
 	"github.com/google/subcommands"
 
@@ -39,13 +40,17 @@ func (cmd *StartCommand) SetFlags(f *flag.FlagSet) {
 
 // Execute executes startup tmux session and returns an ExitStatus.
 func (cmd *StartCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-	fpath, err := config.ConfigurationPath(cmd.profile)
+	path, err := config.ConfigurationPath(cmd.profile)
 	if err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure
 	}
+	if _, err := os.Stat(path); err != nil {
+		logger.Err(err.Error())
+		return subcommands.ExitFailure
+	}
 
-	c, err := config.LoadFile(fpath)
+	c, err := config.LoadFile(path)
 	if err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure

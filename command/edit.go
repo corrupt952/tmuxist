@@ -50,12 +50,17 @@ func (cmd *EditCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interfa
 		return subcommands.ExitFailure
 	}
 
-	cfgPath, err := config.ConfigurationPath(cmd.profile)
+	path, err := config.ConfigurationPath(cmd.profile)
 	if err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure
 	}
-	shell := exec.Command(editor, cfgPath)
+	if _, err := os.Stat(path); err != nil {
+		logger.Err(err.Error())
+		return subcommands.ExitFailure
+	}
+
+	shell := exec.Command(editor, path)
 	shell.Stdin = os.Stdin
 	shell.Stdout = os.Stdout
 	shell.Stderr = os.Stderr

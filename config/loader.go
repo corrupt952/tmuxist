@@ -13,7 +13,7 @@ import (
 
 const (
 	// ConfigDirPath is tmuxist configuration parent directory path.
-	ConfigDirPath = "~/.config/tmuxist"
+	configDirPath = "~/.config/tmuxist"
 )
 
 // DefaultProfileName returns "default" or TMUXIST_PROFILE.
@@ -54,13 +54,25 @@ func LoadFileByProfile(profile string) (*Config, error) {
 	return c, nil
 }
 
-// ConfigurationPath returns configuration path by profile.
-func ConfigurationPath(profile string) (string, error) {
-	p, err := path_helper.Fullpath(filepath.Join(ConfigDirPath, profile+".toml"))
+// ConfigurationDirectoryPath returns ConfigDirPath.
+func ConfigurationDirectoryPath() (string, error) {
+	p, err := path_helper.Fullpath(configDirPath)
 	if err != nil {
 		return "", err
 	}
-	if _, err := os.Stat(p); err != nil {
+
+	return p, nil
+}
+
+// ConfigurationPath returns configuration path by profile.
+func ConfigurationPath(profile string) (string, error) {
+	path, err := ConfigurationDirectoryPath()
+	if err != nil {
+		return "", err
+	}
+
+	p, err := path_helper.Fullpath(filepath.Join(path, profile+".toml"))
+	if err != nil {
 		return "", err
 	}
 
