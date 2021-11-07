@@ -3,6 +3,8 @@ LDFLAGS ?= -ldflags "-s -w -X 'tmuxist/command.Version=$(VERSION)'"
 
 # HACK: make [target] [ARGS...]
 ARGS = $(filter-out $@,$(MAKECMDGOALS))
+
+# HACK: nothing undefined target
 %:
 	@:
 
@@ -12,13 +14,13 @@ run:
 	go run $(LDFLAGS) . $(ARGS)
 
 fmt:
-	go fmt ./...
+	@go fmt ./...
 
 test:
-	go test -v ./...
+	@go test -v ./...
 
 lint:
-	go list | xargs golint
+	@go list | xargs golint
 
 clean:
 	@rm -rf pkg/*
