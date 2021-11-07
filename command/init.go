@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"os"
 	"os/user"
-	"path/filepath"
 	"text/template"
 
 	"github.com/google/subcommands"
@@ -44,7 +43,13 @@ func (cmd *InitCommand) SetFlags(f *flag.FlagSet) {
 
 // Execute executes create configuration and returns an ExitStatus.
 func (cmd *InitCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-	cfgDirPath, err := path_helper.Fullpath(config.ConfigDirPath)
+	path, err := config.ConfigurationDirectoryPath()
+	if err != nil {
+		logger.Err(err.Error())
+		return subcommands.ExitFailure
+	}
+
+	cfgDirPath, err := path_helper.Fullpath(path)
 	if err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure
@@ -53,7 +58,7 @@ func (cmd *InitCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interfa
 		logger.Warn(err.Error())
 	}
 
-	cfgPath := filepath.Join(cfgDirPath, cmd.profile+".toml")
+	cfgPath, err := config.ConfigurationPath(cmd.profile)
 	if err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure

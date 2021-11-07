@@ -1,6 +1,7 @@
 VERSION ?= 0.0.7
 LDFLAGS ?= -ldflags "-s -w -X 'tmuxist/command.Version=$(VERSION)'"
 
+# HACK: make [target] [ARGS...]
 ARGS = $(filter-out $@,$(MAKECMDGOALS))
 %:
 	@:
