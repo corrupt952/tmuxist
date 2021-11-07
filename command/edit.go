@@ -28,7 +28,7 @@ func (*EditCommand) Synopsis() string {
 	return "edit tmuxist configuration"
 }
 
-// Usage returns a long string explaining EditCommand and givinig usage.
+// Usage returns a long string explaining EditCommand and giving usage.
 func (*EditCommand) Usage() string {
 	return "edit: tmuxist edit [-editor editor] [-profile profile]\n"
 }

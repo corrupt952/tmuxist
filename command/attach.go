@@ -28,7 +28,7 @@ func (*AttachCommand) Synopsis() string {
 	return "attach tmux session"
 }
 
-// Usage returns a long string explaining AttachCommand and givinig usage.
+// Usage returns a long string explaining AttachCommand and giving usage.
 func (*AttachCommand) Usage() string {
 	return "kill: tmuxist kill [-profile profile]\n"
 }
