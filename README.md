@@ -4,8 +4,6 @@
 
 ## TODO
 ### main
-* list profiles
-* delete profile
 * log level
 ### test
 * config
