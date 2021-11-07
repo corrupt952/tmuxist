@@ -56,7 +56,7 @@ func (cmd *KillCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interfa
 		return subcommands.ExitFailure
 	}
 
-	r := renderer.KillRenderer{c}
+	r := renderer.KillRenderer{Config: c}
 	if err := shell_helper.Exec(r.Render()); err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure

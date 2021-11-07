@@ -12,30 +12,30 @@ import (
 	"github.com/google/subcommands"
 )
 
-// LIstCommand represents a version command.
-type LIstCommand struct{}
+// ListCommand represents a version command.
+type ListCommand struct{}
 
-// Name returns the name of LIstCommand.
-func (*LIstCommand) Name() string {
+// Name returns the name of ListCommand.
+func (*ListCommand) Name() string {
 	return "list"
 }
 
-// Synopsis returns a short string describing LIstCommand.
-func (*LIstCommand) Synopsis() string {
+// Synopsis returns a short string describing ListCommand.
+func (*ListCommand) Synopsis() string {
 	return "List tmuxist profiles"
 }
 
-// Usage returns a long string explaining LIstCommand and givinig usage.
-func (*LIstCommand) Usage() string {
+// Usage returns a long string explaining ListCommand and givinig usage.
+func (*ListCommand) Usage() string {
 	return "list: show tmuxist profiles\n"
 }
 
-// SetFlags adds the flags for LIstCommand to the specified set.
-func (*LIstCommand) SetFlags(f *flag.FlagSet) {
+// SetFlags adds the flags for ListCommand to the specified set.
+func (*ListCommand) SetFlags(f *flag.FlagSet) {
 }
 
 // Execute executes print version and returns an ExitStatus.
-func (*LIstCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+func (*ListCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
 	path, err := config.ConfigurationDirectoryPath()
 	if err != nil {
 		logger.Err(err.Error())
