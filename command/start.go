@@ -28,7 +28,7 @@ func (*StartCommand) Synopsis() string {
 	return "start tmux session"
 }
 
-// Usage returns a long string explaining StartCommand and givinig usage.
+// Usage returns a long string explaining StartCommand and giving usage.
 func (*StartCommand) Usage() string {
 	return "start: tmuxist start [-profile profile]\n"
 }

@@ -25,7 +25,7 @@ func (*VersionCommand) Synopsis() string {
 	return "Print tmuxist version"
 }
 
-// Usage returns a long string explaining VersionCommand and givinig usage.
+// Usage returns a long string explaining VersionCommand and giving usage.
 func (*VersionCommand) Usage() string {
 	return "version: tmuxist version\n"
 }

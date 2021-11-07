@@ -27,7 +27,7 @@ func (*PrintCommand) Synopsis() string {
 	return "print tmuxist configuration"
 }
 
-// Usage returns a long string explaining PrintCommand and givinig usage.
+// Usage returns a long string explaining PrintCommand and giving usage.
 func (*PrintCommand) Usage() string {
 	return "print: tmuxist print [-profile profile]\n"
 }

@@ -30,7 +30,7 @@ func (*InitCommand) Synopsis() string {
 	return "initialize tmuxist configuration"
 }
 
-// Usage returns a long string explaining InitCommand and givinig usage.
+// Usage returns a long string explaining InitCommand and giving usage.
 func (*InitCommand) Usage() string {
 	return "init: tmuxist init [-profile profile]\n"
 }

@@ -25,9 +25,9 @@ func (*ListCommand) Synopsis() string {
 	return "List tmuxist profiles"
 }
 
-// Usage returns a long string explaining ListCommand and givinig usage.
+// Usage returns a long string explaining ListCommand and giving usage.
 func (*ListCommand) Usage() string {
-	return "list: show tmuxist profiles\n"
+	return "list: tmuxist list\n"
 }
 
 // SetFlags adds the flags for ListCommand to the specified set.

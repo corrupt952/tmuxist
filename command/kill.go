@@ -28,7 +28,7 @@ func (*KillCommand) Synopsis() string {
 	return "kill tmux session"
 }
 
-// Usage returns a long string explaining KillCommand and givinig usage.
+// Usage returns a long string explaining KillCommand and giving usage.
 func (*KillCommand) Usage() string {
 	return "kill: tmuxist kill [-profile profile]\n"
 }
