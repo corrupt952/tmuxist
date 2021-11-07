@@ -15,16 +15,7 @@
       }
     },
     "editor.formatOnSave": true,
-    "editor.tabSize": 2,
-    "editor.insertSpaces": true,
-    "[go]": {
-      "editor.insertSpaces": false
-    },
-    "[makefile]": {
-      "editor.insertSpaces": false
-    },
     "[dockerfile]": {
-      "editor.tabSize": 4,
       "editor.quickSuggestions": {
         "strings": true
       }
