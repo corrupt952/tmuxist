@@ -14,7 +14,7 @@ import (
 func main() {
 	logger.Setup(os.Stderr)
 
-	subcommands.Register(&command.LIstCommand{}, "")
+	subcommands.Register(&command.ListCommand{}, "")
 	subcommands.Register(&command.InitCommand{}, "")
 	subcommands.Register(&command.EditCommand{}, "")
 	subcommands.Register(&command.PrintCommand{}, "")
