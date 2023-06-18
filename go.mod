@@ -5,7 +5,7 @@ go 1.15
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/google/subcommands v0.0.0-20181012225330-46f0354f6315
+	github.com/google/subcommands v1.2.0
 	github.com/hashicorp/go-version v1.2.1 // indirect
 	github.com/hashicorp/logutils v1.0.0
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
