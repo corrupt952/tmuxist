@@ -11,6 +11,7 @@ require (
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
 	github.com/mitchellh/gox v1.0.1 // indirect
 	github.com/pelletier/go-toml v1.9.5
+	github.com/pelletier/go-toml/v2 v2.0.9
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/tools v0.0.0-20201121010211-780cb80bd7fb // indirect
 	gopkg.in/yaml.v2 v2.3.0 // indirect
