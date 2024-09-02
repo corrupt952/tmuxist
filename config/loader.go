@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/pelletier/go-toml"
+	"github.com/pelletier/go-toml/v2"
 
 	path_helper "tmuxist/helper/path"
 	"tmuxist/logger"
