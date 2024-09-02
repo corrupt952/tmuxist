@@ -14,9 +14,7 @@ import (
 )
 
 // StartCommand represents a startup tmux session command.
-type StartCommand struct {
-	profile string
-}
+type StartCommand struct {}
 
 // Name returns the name of StartCommand.
 func (*StartCommand) Name() string {
@@ -30,17 +28,15 @@ func (*StartCommand) Synopsis() string {
 
 // Usage returns a long string explaining StartCommand and giving usage.
 func (*StartCommand) Usage() string {
-	return "start: tmuxist start [-profile profile]\n"
+	return "start: tmuxist start\n"
 }
 
 // SetFlags adds the flags for StartCommand to the specified set.
-func (cmd *StartCommand) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&cmd.profile, "profile", config.DefaultProfileName(), "Profile")
-}
+func (cmd *StartCommand) SetFlags(f *flag.FlagSet) {}
 
 // Execute executes startup tmux session and returns an ExitStatus.
 func (cmd *StartCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-	path, err := config.ConfigurationPath(cmd.profile)
+	path, err := config.ConfigurationPath()
 	if err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure

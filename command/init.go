@@ -7,18 +7,16 @@ import (
 	"io/ioutil"
 	"os"
 	"text/template"
+	"path/filepath"
 
 	"github.com/google/subcommands"
 
 	"tmuxist/config"
-	path_helper "tmuxist/helper/path"
 	"tmuxist/logger"
 )
 
 // InitCommand represents a create configuration command.
-type InitCommand struct {
-	profile string
-}
+type InitCommand struct{}
 
 // Name returns the name of InitCommand.
 func (*InitCommand) Name() string {
@@ -32,32 +30,15 @@ func (*InitCommand) Synopsis() string {
 
 // Usage returns a long string explaining InitCommand and giving usage.
 func (*InitCommand) Usage() string {
-	return "init: tmuxist init [-profile profile]\n"
+	return "init: tmuxist init\n"
 }
 
 // SetFlags adds the flags for InitCommand to the specified set.
-func (cmd *InitCommand) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&cmd.profile, "profile", config.DefaultProfileName(), "Profile")
-}
+func (cmd *InitCommand) SetFlags(f *flag.FlagSet) {}
 
 // Execute executes create configuration and returns an ExitStatus.
 func (cmd *InitCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-	path, err := config.ConfigurationDirectoryPath()
-	if err != nil {
-		logger.Err(err.Error())
-		return subcommands.ExitFailure
-	}
-
-	cfgDirPath, err := path_helper.Fullpath(path)
-	if err != nil {
-		logger.Err(err.Error())
-		return subcommands.ExitFailure
-	}
-	if err := os.MkdirAll(cfgDirPath, os.ModePerm); err != nil {
-		logger.Warn(err.Error())
-	}
-
-	cfgPath, err := config.ConfigurationPath(cmd.profile)
+	cfgPath, err := config.ConfigurationPath()
 	if err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure
@@ -83,10 +64,11 @@ command = "echo 'hello'"`)
 		logger.Err(err.Error())
 		return subcommands.ExitFailure
 	}
+	directory := filepath.Base(currentPath)
 	var buf bytes.Buffer
 	attach := true
 	err = tmpl.Execute(&buf, &config.Config{
-		Name:    cmd.profile,
+		Name:    directory,
 		Root:    currentPath,
 		Attach:  &attach,
 		Windows: []config.Window{},

@@ -14,9 +14,7 @@ import (
 )
 
 // KillCommand represents a kill tmux session command.
-type KillCommand struct {
-	profile string
-}
+type KillCommand struct {}
 
 // Name returns the name of KillCommand.
 func (*KillCommand) Name() string {
@@ -30,17 +28,15 @@ func (*KillCommand) Synopsis() string {
 
 // Usage returns a long string explaining KillCommand and giving usage.
 func (*KillCommand) Usage() string {
-	return "kill: tmuxist kill [-profile profile]\n"
+	return "kill: tmuxist kill\n"
 }
 
 // SetFlags adds the flags for KillCommand to the specified set.
-func (cmd *KillCommand) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&cmd.profile, "profile", config.DefaultProfileName(), "Profile")
-}
+func (cmd *KillCommand) SetFlags(f *flag.FlagSet) {}
 
 // Execute executes kill tmux session and returns an ExitStatus.
 func (cmd *KillCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-	path, err := config.ConfigurationPath(cmd.profile)
+	path, err := config.ConfigurationPath()
 	if err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure

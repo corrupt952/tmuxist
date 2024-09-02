@@ -14,9 +14,7 @@ import (
 )
 
 // AttachCommand represents a attach tmux session command.
-type AttachCommand struct {
-	profile string
-}
+type AttachCommand struct {}
 
 // Name returns the name of AttachCommand.
 func (*AttachCommand) Name() string {
@@ -30,17 +28,15 @@ func (*AttachCommand) Synopsis() string {
 
 // Usage returns a long string explaining AttachCommand and giving usage.
 func (*AttachCommand) Usage() string {
-	return "kill: tmuxist kill [-profile profile]\n"
+	return "kill: tmuxist kill\n"
 }
 
 // SetFlags adds the flags for AttachCommand to the specified set.
-func (cmd *AttachCommand) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&cmd.profile, "profile", config.DefaultProfileName(), "Profile")
-}
+func (cmd *AttachCommand) SetFlags(f *flag.FlagSet) {}
 
 // Execute executes attach tmux session and returns an ExitStatus.
 func (cmd *AttachCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-	path, err := config.ConfigurationPath(cmd.profile)
+	path, err := config.ConfigurationPath()
 	if err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure
