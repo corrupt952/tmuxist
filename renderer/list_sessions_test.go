@@ -3,7 +3,6 @@ package renderer
 import (
 	"testing"
 
-	"tmuxist/config"
 	test_helper "tmuxist/helper/test"
 )
 
