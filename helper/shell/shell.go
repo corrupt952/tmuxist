@@ -3,6 +3,7 @@ package shell
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"syscall"
 )
@@ -30,9 +31,16 @@ func Exec(command string) error {
 		"/bin/sh",
 		[]string{
 			CurrentShell(),
-			"-c",
+			"-cx",
 			command,
 		},
 		os.Environ(),
 	)
+}
+
+// ExecWithOutput executes command on current shell and returns output
+func ExecWithOutput(command string) (string, error) {
+	cmd := exec.Command(CurrentShell(), "-c", command)
+	out, err := cmd.CombinedOutput()
+	return string(out), err
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"os"
+	"strings"
 
 	"github.com/google/subcommands"
 
@@ -34,6 +35,23 @@ func (*StartCommand) Usage() string {
 // SetFlags adds the flags for StartCommand to the specified set.
 func (cmd *StartCommand) SetFlags(f *flag.FlagSet) {}
 
+// HasSession checks if the session is already exists.
+func (cmd *StartCommand) HasSession(c *config.Config) bool {
+	r := renderer.ListSessionsRenderer{}
+	output, err := shell_helper.ExecWithOutput(r.Render())
+	if err != nil {
+		logger.Err(err.Error())
+		return false
+	}
+	lines := strings.Split(output, "\n")
+	for _, line := range lines {
+		if line == c.Name {
+			return true
+		}
+	}
+	return false
+}
+
 // Execute executes startup tmux session and returns an ExitStatus.
 func (cmd *StartCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
 	path, err := config.ConfigurationPath()
@@ -52,10 +70,18 @@ func (cmd *StartCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interf
 		return subcommands.ExitFailure
 	}
 
-	r := renderer.StartRenderer{Config: c}
-	if err := shell_helper.Exec(r.Render()); err != nil {
-		logger.Err(err.Error())
-		return subcommands.ExitFailure
+	if cmd.HasSession(c) {
+		r := renderer.AttachRenderer{Config: c}
+		if err := shell_helper.Exec(r.Render()); err != nil {
+			logger.Err(err.Error())
+			return subcommands.ExitFailure
+		}
+	} else {
+		r := renderer.StartRenderer{Config: c}
+		if err := shell_helper.Exec(r.Render()); err != nil {
+			logger.Err(err.Error())
+			return subcommands.ExitFailure
+		}
 	}
 
 	return subcommands.ExitSuccess
