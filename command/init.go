@@ -69,7 +69,7 @@ command = "echo 'hello'"`)
 	attach := true
 	err = tmpl.Execute(&buf, &config.Config{
 		Name:    directory,
-		Root:    currentPath,
+		Root:    ".",
 		Attach:  &attach,
 		Windows: []config.Window{},
 	})
