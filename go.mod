@@ -2,7 +2,7 @@ module tmuxist
 
 go 1.21.0
 
-toolchain go1.24.1
+toolchain go1.24.2
 
 require (
 	github.com/google/subcommands v1.2.0
