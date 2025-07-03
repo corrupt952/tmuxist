@@ -3,7 +3,6 @@ package command
 import (
 	"context"
 	"flag"
-	"os"
 	"strings"
 
 	"github.com/google/subcommands"
@@ -16,7 +15,7 @@ import (
 
 // StartCommand represents a startup tmux session command.
 type StartCommand struct {
-	configFile string
+	ConfigCommand
 }
 
 // Name returns the name of StartCommand.
@@ -36,8 +35,7 @@ func (*StartCommand) Usage() string {
 
 // SetFlags adds the flags for StartCommand to the specified set.
 func (cmd *StartCommand) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&cmd.configFile, "f", "", "Path to the configuration file")
-	f.StringVar(&cmd.configFile, "file", "", "Path to the configuration file")
+	cmd.SetConfigFlags(f)
 }
 
 // HasSession checks if the session is already exists.
@@ -59,30 +57,7 @@ func (cmd *StartCommand) HasSession(c *config.Config) bool {
 
 // Execute executes startup tmux session and returns an ExitStatus.
 func (cmd *StartCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-	var path string
-	var err error
-
-	if cmd.configFile != "" {
-		// Use the specified file
-		path = cmd.configFile
-		if _, err := os.Stat(path); err != nil {
-			logger.Err(err.Error())
-			return subcommands.ExitFailure
-		}
-	} else {
-		// Use the default configuration path
-		path, err = config.ConfigurationPath()
-		if err != nil {
-			logger.Err(err.Error())
-			return subcommands.ExitFailure
-		}
-		if _, err := os.Stat(path); err != nil {
-			logger.Err(err.Error())
-			return subcommands.ExitFailure
-		}
-	}
-
-	c, err := config.LoadFile(path)
+	c, err := cmd.LoadConfig()
 	if err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure

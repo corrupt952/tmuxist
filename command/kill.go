@@ -3,11 +3,9 @@ package command
 import (
 	"context"
 	"flag"
-	"os"
 
 	"github.com/google/subcommands"
 
-	"tmuxist/config"
 	shell_helper "tmuxist/helper/shell"
 	"tmuxist/logger"
 	"tmuxist/renderer"
@@ -15,7 +13,7 @@ import (
 
 // KillCommand represents a kill tmux session command.
 type KillCommand struct {
-	configFile string
+	ConfigCommand
 }
 
 // Name returns the name of KillCommand.
@@ -35,36 +33,12 @@ func (*KillCommand) Usage() string {
 
 // SetFlags adds the flags for KillCommand to the specified set.
 func (cmd *KillCommand) SetFlags(f *flag.FlagSet) {
-	f.StringVar(&cmd.configFile, "f", "", "Path to the configuration file")
-	f.StringVar(&cmd.configFile, "file", "", "Path to the configuration file")
+	cmd.SetConfigFlags(f)
 }
 
 // Execute executes kill tmux session and returns an ExitStatus.
 func (cmd *KillCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-	var path string
-	var err error
-
-	if cmd.configFile != "" {
-		// Use the specified file
-		path = cmd.configFile
-		if _, err := os.Stat(path); err != nil {
-			logger.Err(err.Error())
-			return subcommands.ExitFailure
-		}
-	} else {
-		// Use the default configuration path
-		path, err = config.ConfigurationPath()
-		if err != nil {
-			logger.Err(err.Error())
-			return subcommands.ExitFailure
-		}
-		if _, err := os.Stat(path); err != nil {
-			logger.Err(err.Error())
-			return subcommands.ExitFailure
-		}
-	}
-
-	c, err := config.LoadFile(path)
+	c, err := cmd.LoadConfig()
 	if err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure
