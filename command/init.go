@@ -74,7 +74,7 @@ windows:
   - panes:
       - command: "echo 'hello'"
 `
-	default:
+	case "toml":
 		filename = ".tmuxist.toml"
 		configContent = `name = "{{.Name}}"
 root = "{{.Root}}"
@@ -84,6 +84,9 @@ attach = {{.Attach}}
 [[windows.panes]]
 command = "echo 'hello'"
 `
+	default:
+		logger.Err("Invalid format: " + cmd.format + ". Supported formats: yaml, yml, toml")
+		return subcommands.ExitFailure
 	}
 
 	cfgPath := filepath.Join(currentPath, filename)
