@@ -3,8 +3,11 @@ package config
 import (
 	"io/ioutil"
 	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/pelletier/go-toml/v2"
+	"gopkg.in/yaml.v3"
 
 	"tmuxist/logger"
 )
@@ -17,7 +20,26 @@ func LoadFile(path string) (*Config, error) {
 	}
 
 	c := Config{}
-	toml.Unmarshal([]byte(f), &c)
+	ext := strings.ToLower(filepath.Ext(path))
+	
+	switch ext {
+	case ".yaml", ".yml":
+		err = yaml.Unmarshal(f, &c)
+		if err != nil {
+			return nil, err
+		}
+	case ".toml":
+		err = toml.Unmarshal(f, &c)
+		if err != nil {
+			return nil, err
+		}
+	default:
+		err = toml.Unmarshal(f, &c)
+		if err != nil {
+			return nil, err
+		}
+	}
+	
 	return &c, nil
 }
 
@@ -29,7 +51,20 @@ func ConfigurationPath() (string, error) {
 		return "", err
 	}
 
-	p = p + "/tmuxist.toml"
+	// Check for configuration files in order of preference
+	configFiles := []string{
+		"tmuxist.yaml",
+		"tmuxist.yml",
+		"tmuxist.toml",
+	}
 
-	return p, nil
+	for _, configFile := range configFiles {
+		configPath := filepath.Join(p, configFile)
+		if _, err := os.Stat(configPath); err == nil {
+			return configPath, nil
+		}
+	}
+
+	// Default to tmuxist.toml if no config file exists
+	return filepath.Join(p, "tmuxist.toml"), nil
 }

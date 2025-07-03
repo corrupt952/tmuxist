@@ -10,3 +10,5 @@ require (
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51
 	github.com/pelletier/go-toml/v2 v2.2.4
 )
+
+require gopkg.in/yaml.v3 v3.0.1

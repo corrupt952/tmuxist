@@ -2,8 +2,8 @@ package config
 
 // Config represents a tmuxist and tmux's session configuration.
 type Config struct {
-	Name    string
-	Root    string
-	Attach  *bool
-	Windows []Window
+	Name    string   `toml:"name" yaml:"name"`
+	Root    string   `toml:"root" yaml:"root"`
+	Attach  *bool    `toml:"attach" yaml:"attach"`
+	Windows []Window `toml:"windows" yaml:"windows"`
 }
