@@ -15,7 +15,7 @@ import (
 )
 
 // StartCommand represents a startup tmux session command.
-type StartCommand struct {}
+type StartCommand struct{}
 
 // Name returns the name of StartCommand.
 func (*StartCommand) Name() string {

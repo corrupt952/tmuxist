@@ -21,7 +21,7 @@ func LoadFile(path string) (*Config, error) {
 
 	c := Config{}
 	ext := strings.ToLower(filepath.Ext(path))
-	
+
 	switch ext {
 	case ".yaml", ".yml":
 		err = yaml.Unmarshal(f, &c)
@@ -39,7 +39,7 @@ func LoadFile(path string) (*Config, error) {
 			return nil, err
 		}
 	}
-	
+
 	return &c, nil
 }
 

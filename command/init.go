@@ -6,8 +6,8 @@ import (
 	"flag"
 	"io/ioutil"
 	"os"
-	"text/template"
 	"path/filepath"
+	"text/template"
 
 	"github.com/google/subcommands"
 
@@ -16,7 +16,7 @@ import (
 )
 
 // InitCommand represents a create configuration command.
-type InitCommand struct{
+type InitCommand struct {
 	format string
 }
 
@@ -48,10 +48,10 @@ func (cmd *InitCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interfa
 		logger.Err(err.Error())
 		return subcommands.ExitFailure
 	}
-	
+
 	var filename string
 	var configContent string
-	
+
 	// Determine filename based on format (always hidden)
 	switch cmd.format {
 	case "yaml":
@@ -85,20 +85,20 @@ attach = {{.Attach}}
 command = "echo 'hello'"
 `
 	}
-	
+
 	cfgPath := filepath.Join(currentPath, filename)
 
 	if _, err := os.Stat(cfgPath); err == nil {
 		logger.Warn(cfgPath + " already exists.")
 		return subcommands.ExitFailure
 	}
-	
+
 	tmpl, err := template.New("tmuxist").Parse(configContent)
 	if err != nil {
 		logger.Err(err.Error())
 		return subcommands.ExitFailure
 	}
-	
+
 	directory := filepath.Base(currentPath)
 	var buf bytes.Buffer
 	attach := true

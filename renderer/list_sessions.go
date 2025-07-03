@@ -1,7 +1,7 @@
 package renderer
 
 // ListSessionsRenderer represents startup shell script.
-type ListSessionsRenderer struct {}
+type ListSessionsRenderer struct{}
 
 // Render returns
 func (r *ListSessionsRenderer) Render() string {

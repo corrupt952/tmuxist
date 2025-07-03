@@ -210,7 +210,7 @@ func TestConfigurationPath_Priority(t *testing.T) {
 
 	// Clean up YAML to test YML
 	os.Remove("tmuxist.yaml")
-	
+
 	// Test 4: YML should be selected when YAML is removed
 	path, err = ConfigurationPath()
 	if err != nil {

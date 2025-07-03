@@ -57,7 +57,13 @@ func (r *StartRenderer) renderWindow(w *config.Window, isFirst bool) string {
 	}
 
 	if w.Layout != "" {
-		s += fmt.Sprintf("tmux select-layout %s\n", w.Layout)
+		// Check if it's a grid layout notation (e.g., "2x2")
+		if isGridLayout(w.Layout) {
+			cols, rows, _ := parseGridLayout(w.Layout)
+			s += generateGridCommands(cols, rows)
+		} else {
+			s += fmt.Sprintf("tmux select-layout %s\n", w.Layout)
+		}
 	}
 
 	if w.Sync != nil && *w.Sync {
@@ -73,7 +79,14 @@ func (r *StartRenderer) renderPane(p *config.Pane, isFirst bool) string {
 	if isFirst {
 		s += "PANE_NO=$WINDOW_NO\n"
 	} else {
-		s += fmt.Sprintf("PANE_NO=%s\n", shell_helper.CommandSubstitution("tmux split-window -t $WINDOW_NO -P"))
+		splitCmd := "tmux split-window -t $WINDOW_NO -P"
+		// Add size option if specified
+		if p.Size != "" && strings.HasSuffix(p.Size, "%") {
+			// Extract percentage value
+			percentage := strings.TrimSuffix(p.Size, "%")
+			splitCmd = fmt.Sprintf("tmux split-window -t $WINDOW_NO -P -p %s", percentage)
+		}
+		s += fmt.Sprintf("PANE_NO=%s\n", shell_helper.CommandSubstitution(splitCmd))
 	}
 
 	commands := strings.Split(p.Command, "\n")

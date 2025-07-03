@@ -14,7 +14,7 @@ import (
 )
 
 // KillCommand represents a kill tmux session command.
-type KillCommand struct {}
+type KillCommand struct{}
 
 // Name returns the name of KillCommand.
 func (*KillCommand) Name() string {

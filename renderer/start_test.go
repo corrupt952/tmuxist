@@ -118,3 +118,92 @@ tmux send-keys -t $PANE_NO 'echo "hoge"' C-m
 `
 	test_helper.AssertEquals(t, actual, expected)
 }
+
+func TestStartRenderer_RenderWindow_WithGridLayout(t *testing.T) {
+	r := StartRenderer{&config.Config{}}
+	w := config.Window{
+		Layout: "2x2",
+		Panes: []config.Pane{
+			{Command: "vim"},
+			{Command: "npm run dev"},
+			{Command: "git status"},
+			{Command: "htop"},
+		},
+	}
+
+	actual := r.renderWindow(&w, true)
+	expected := `WINDOW_NO=$SESSION_NO
+PANE_NO=$WINDOW_NO
+tmux send-keys -t $PANE_NO vim C-m
+PANE_NO=$(tmux split-window -t $WINDOW_NO -P)
+tmux send-keys -t $PANE_NO 'npm run dev' C-m
+PANE_NO=$(tmux split-window -t $WINDOW_NO -P)
+tmux send-keys -t $PANE_NO 'git status' C-m
+PANE_NO=$(tmux split-window -t $WINDOW_NO -P)
+tmux send-keys -t $PANE_NO htop C-m
+tmux select-layout tiled
+
+`
+	test_helper.AssertEquals(t, actual, expected)
+}
+
+func TestStartRenderer_RenderWindow_WithStandardLayout(t *testing.T) {
+	r := StartRenderer{&config.Config{}}
+	w := config.Window{
+		Layout: "main-vertical",
+		Panes: []config.Pane{
+			{Command: "vim"},
+			{Command: "npm test"},
+		},
+	}
+
+	actual := r.renderWindow(&w, true)
+	expected := `WINDOW_NO=$SESSION_NO
+PANE_NO=$WINDOW_NO
+tmux send-keys -t $PANE_NO vim C-m
+PANE_NO=$(tmux split-window -t $WINDOW_NO -P)
+tmux send-keys -t $PANE_NO 'npm test' C-m
+tmux select-layout main-vertical
+
+`
+	test_helper.AssertEquals(t, actual, expected)
+}
+
+func TestStartRenderer_RenderPane_WithSize(t *testing.T) {
+	r := StartRenderer{&config.Config{}}
+	p := config.Pane{
+		Command: "htop",
+		Size:    "30%",
+	}
+
+	actual := r.renderPane(&p, false)
+	expected := `PANE_NO=$(tmux split-window -t $WINDOW_NO -P -p 30)
+tmux send-keys -t $PANE_NO htop C-m
+`
+	test_helper.AssertEquals(t, actual, expected)
+}
+
+func TestStartRenderer_RenderWindow_WithPaneSizes(t *testing.T) {
+	r := StartRenderer{&config.Config{}}
+	w := config.Window{
+		Layout: "main-vertical",
+		Panes: []config.Pane{
+			{Command: "vim"},                   // First pane - no size
+			{Command: "npm test", Size: "30%"}, // Second pane - 30%
+			{Command: "git log", Size: "20%"},  // Third pane - 20%
+		},
+	}
+
+	actual := r.renderWindow(&w, true)
+	expected := `WINDOW_NO=$SESSION_NO
+PANE_NO=$WINDOW_NO
+tmux send-keys -t $PANE_NO vim C-m
+PANE_NO=$(tmux split-window -t $WINDOW_NO -P -p 30)
+tmux send-keys -t $PANE_NO 'npm test' C-m
+PANE_NO=$(tmux split-window -t $WINDOW_NO -P -p 20)
+tmux send-keys -t $PANE_NO 'git log' C-m
+tmux select-layout main-vertical
+
+`
+	test_helper.AssertEquals(t, actual, expected)
+}
