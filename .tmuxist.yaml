@@ -1,0 +1,12 @@
+name: "tmuxist"
+root: "."
+attach: true
+
+windows:
+  - panes:
+      - command: "claude"
+  - panes:
+      - command: "claude"
+  - panes:
+      - command:
+
