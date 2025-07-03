@@ -103,3 +103,21 @@ func TestDefaultSessionLister_ListSessions(t *testing.T) {
 	// Integration tests would test the actual DefaultSessionLister
 	t.Skip("Skipping integration test that requires tmux")
 }
+
+func TestHasSession_ConvenienceFunction(t *testing.T) {
+	// This tests the convenience function that uses the default implementation
+	// Since it depends on tmux being available, we'll just verify it doesn't panic
+	// and returns the expected error when tmux is not available
+
+	// Note: This test may pass or fail depending on whether tmux is installed
+	// The important thing is that it doesn't panic
+	_, err := HasSession("test-session")
+
+	// We expect either nil (if tmux is installed) or an error (if not)
+	// The function should handle both cases gracefully
+	if err != nil {
+		t.Logf("HasSession returned error (expected if tmux not available): %v", err)
+	} else {
+		t.Log("HasSession succeeded (tmux is available)")
+	}
+}
