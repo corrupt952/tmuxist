@@ -1,0 +1,65 @@
+# Real-world web application development setup
+# A practical example for full-stack development
+
+name: webapp-dev
+root: ~/projects/awesome-webapp
+attach: true
+
+windows:
+  # Frontend development
+  - layout: main-vertical
+    panes:
+      - command: |
+          cd frontend
+          code .
+          npm run dev
+      - command: |
+          cd frontend
+          npm run test:watch
+        size: "30%"
+      - command: |
+          cd frontend
+          npm run lint:watch
+        size: "20%"
+
+  # Backend development
+  - layout: main-horizontal
+    panes:
+      - command: |
+          cd backend
+          vim .
+      - command: |
+          cd backend
+          npm run dev
+        size: "25%"
+      - command: |
+          cd backend
+          npm run test:watch
+        size: "25%"
+
+  # Database and services
+  - layout: "2x2"
+    panes:
+      - command: docker-compose logs -f db
+      - command: docker-compose logs -f redis
+      - command: docker-compose logs -f elasticsearch
+      - command: pgcli postgresql://localhost/webapp_dev
+
+  # Monitoring and logs
+  - layout: tiled
+    panes:
+      - command: tail -f logs/application.log
+      - command: tail -f logs/error.log
+      - command: htop
+      - command: watch -n 2 'curl -s localhost:3000/health | jq .'
+
+  # Git and deployment
+  - layout: main-vertical
+    panes:
+      - command: tig
+      - command: |
+          echo "Deployment commands:"
+          echo "  npm run build"
+          echo "  npm run deploy:staging"
+          echo "  npm run deploy:production"
+        size: "40%"

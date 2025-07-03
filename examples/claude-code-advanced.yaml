@@ -1,0 +1,104 @@
+# Advanced Claude Code setup with specialized workflows
+# Different Claude instances for different parts of the project
+
+name: claude-advanced
+root: .
+attach: true
+
+windows:
+  # Frontend development with Claude
+  - layout: main-vertical
+    panes:
+      - command: |
+          cd frontend
+          echo "=== Claude for Frontend Development ==="
+          echo "Context: React, TypeScript, Tailwind CSS"
+          echo ""
+          claude
+      - command: |
+          cd frontend
+          npm run dev
+        size: "30%"
+      - command: |
+          cd frontend
+          npm run test:watch
+        size: "20%"
+
+  # Backend development with Claude
+  - layout: main-vertical
+    panes:
+      - command: |
+          cd backend
+          echo "=== Claude for Backend Development ==="
+          echo "Context: Node.js, Express, PostgreSQL"
+          echo ""
+          claude
+      - command: |
+          cd backend
+          npm run dev
+        size: "30%"
+      - command: |
+          cd backend
+          npm run test:watch
+        size: "20%"
+
+  # DevOps and Infrastructure
+  - layout: "2x2"
+    panes:
+      - command: |
+          echo "=== Claude for DevOps ==="
+          echo "Context: Docker, Kubernetes, CI/CD"
+          echo ""
+          claude
+      - command: docker-compose logs -f
+      - command: kubectl get pods --watch
+      - command: gh run list --limit 5
+
+  # Code Review and Documentation
+  - layout: main-horizontal
+    panes:
+      - command: |
+          echo "=== Claude for Code Review ==="
+          echo "Focus: Best practices, security, performance"
+          echo ""
+          claude
+      - command: |
+          echo "Recent commits for review:"
+          git log --oneline -10
+          echo ""
+          echo "Type 'git show <commit-hash>' to review"
+        size: "35%"
+
+  # Learning and Research
+  - layout: even-vertical
+    panes:
+      - command: |
+          echo "=== Claude for Learning ==="
+          echo "Ask about new technologies, patterns, and best practices"
+          echo ""
+          claude
+      - command: |
+          echo "=== Bookmarks ==="
+          echo "1. MDN: https://developer.mozilla.org"
+          echo "2. Can I Use: https://caniuse.com"
+          echo "3. Node.js Docs: https://nodejs.org/docs"
+          echo "4. Stack Overflow: https://stackoverflow.com"
+      - command: ""  # Terminal for trying out examples
+
+  # Debugging Station
+  - layout: main-vertical
+    sync: false
+    panes:
+      - command: |
+          echo "=== Claude for Debugging ==="
+          echo "Paste error messages, stack traces, or problematic code"
+          echo ""
+          claude
+      - command: |
+          echo "=== Debug Tools ==="
+          echo "- Node debugger: node --inspect"
+          echo "- Chrome DevTools: chrome://inspect"
+          echo "- VS Code debugger: code --inspect"
+          echo ""
+          tail -f logs/debug.log
+        size: "40%"

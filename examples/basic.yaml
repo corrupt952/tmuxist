@@ -1,0 +1,8 @@
+# Basic tmuxist configuration
+# This is the simplest configuration with a single window and pane
+
+name: basic-session
+root: .
+windows:
+  - panes:
+      - command: echo "Welcome to tmuxist!"

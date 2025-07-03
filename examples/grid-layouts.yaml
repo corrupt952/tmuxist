@@ -1,0 +1,39 @@
+# Grid layout notation examples
+# NEW FEATURE: Use simple grid notation like "2x2", "3x2" etc.
+
+name: grid-layouts
+root: .
+windows:
+  # 2x2 grid (4 panes)
+  - layout: "2x2"
+    panes:
+      - command: echo "Top Left"
+      - command: echo "Top Right"
+      - command: echo "Bottom Left"
+      - command: echo "Bottom Right"
+
+  # 3x2 grid (6 panes)
+  - layout: "3x2"
+    panes:
+      - command: htop
+      - command: iotop
+      - command: nethogs
+      - command: df -h
+      - command: free -h
+      - command: ps aux | head
+
+  # 4x1 grid (4 panes in a row)
+  - layout: "4x1"
+    panes:
+      - command: watch date
+      - command: watch uptime
+      - command: watch "df -h /"
+      - command: watch "free -h"
+
+  # 1x4 grid (4 panes in a column)
+  - layout: "1x4"
+    panes:
+      - command: tail -f /var/log/system.log
+      - command: tail -f ~/.zsh_history
+      - command: journalctl -f
+      - command: dmesg -w

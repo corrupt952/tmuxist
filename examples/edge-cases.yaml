@@ -1,0 +1,49 @@
+# Edge cases and special scenarios
+# Testing various edge cases and special configurations
+
+name: edge-cases
+root: /tmp/tmuxist-test
+
+windows:
+  # Empty window (no panes specified)
+  - layout: tiled
+
+  # Window with empty panes
+  - panes:
+      - command: ""
+      - command: ""
+
+  # Grid with fewer panes than expected
+  - layout: "3x3"  # Expects 9 panes but only 4 provided
+    panes:
+      - command: echo "Pane 1"
+      - command: echo "Pane 2"
+      - command: echo "Pane 3"
+      - command: echo "Pane 4"
+
+  # Grid with more panes than grid size
+  - layout: "2x1"  # Expects 2 panes but 4 provided
+    panes:
+      - command: echo "Pane 1"
+      - command: echo "Pane 2"
+      - command: echo "Pane 3"
+      - command: echo "Pane 4"
+
+  # Mixed empty and non-empty commands
+  - layout: main-horizontal
+    panes:
+      - command: top
+      - command: ""
+        size: "30%"
+      - command: date
+        size: "20%"
+
+  # Special characters in commands
+  - panes:
+      - command: echo "Hello, World!"
+      - command: echo 'Single quotes'
+      - command: "echo \"Double quotes\""
+      - command: | 
+          echo "Multi-line
+          command with
+          special chars: $HOME | grep test & wait"

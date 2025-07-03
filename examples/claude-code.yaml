@@ -1,0 +1,19 @@
+# Claude Code development setup
+# Multiple Claude instances for AI-assisted development
+
+name: claude-dev
+root: .
+attach: true
+
+windows:
+  # Main Claude window for coding
+  - panes:
+      - command: claude
+
+  # Secondary Claude for research/documentation
+  - panes:
+      - command: claude
+
+  # Terminal for testing and git operations
+  - panes:
+      - command: ""  # Empty shell for manual commands

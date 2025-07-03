@@ -1,0 +1,37 @@
+# Pane size percentage examples
+# NEW FEATURE: Specify pane sizes as percentages
+
+name: pane-sizes
+root: .
+windows:
+  # Main editor with small terminal
+  - layout: main-horizontal
+    panes:
+      - command: vim
+      - command: npm run dev
+        size: "20%"  # Terminal takes only 20% of space
+
+  # Three-way split with custom sizes
+  - layout: main-vertical
+    panes:
+      - command: vim src/main.js  # Main pane (default size)
+      - command: npm test --watch
+        size: "30%"               # Test runner at 30%
+      - command: git status
+        size: "20%"               # Git status at 20%
+
+  # Multiple monitors setup
+  - panes:
+      - command: htop           # First split (50%)
+      - command: nvidia-smi -l 1
+        size: "25%"             # Second split (25% of remaining)
+      - command: watch sensors
+        size: "30%"             # Third split (30% of remaining)
+      - command: tail -f /var/log/syslog  # Rest of space
+
+  # Documentation and preview
+  - layout: main-vertical
+    panes:
+      - command: vim README.md
+      - command: grip -b  # GitHub markdown preview
+        size: "40%"

@@ -1,0 +1,30 @@
+# Synchronized panes example
+# Useful for running commands on multiple servers simultaneously
+
+name: multi-server-admin
+root: .
+windows:
+  # Synchronized panes for multiple servers
+  - layout: tiled
+    sync: true  # Enable pane synchronization
+    panes:
+      - command: ssh user@server1.example.com
+      - command: ssh user@server2.example.com
+      - command: ssh user@server3.example.com
+      - command: ssh user@server4.example.com
+
+  # Database connections (not synchronized)
+  - layout: even-vertical
+    sync: false
+    panes:
+      - command: mysql -h db1.example.com -u admin -p
+      - command: psql -h db2.example.com -U admin -d myapp
+
+  # Synchronized local terminals for testing
+  - layout: "2x2"
+    sync: true
+    panes:
+      - command: cd /tmp && echo "Ready on pane 1"
+      - command: cd /tmp && echo "Ready on pane 2"
+      - command: cd /tmp && echo "Ready on pane 3"
+      - command: cd /tmp && echo "Ready on pane 4"

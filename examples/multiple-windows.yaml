@@ -1,0 +1,17 @@
+# Multiple windows configuration
+# Shows how to create multiple windows in a session
+
+name: multi-window
+root: ~/projects
+windows:
+  # First window - Editor
+  - panes:
+      - command: vim
+
+  # Second window - Server
+  - panes:
+      - command: npm run dev
+
+  # Third window - Logs
+  - panes:
+      - command: tail -f /var/log/system.log

@@ -1,0 +1,40 @@
+# Standard tmux layouts
+# Demonstrates all standard tmux layout options
+
+name: standard-layouts
+root: .
+windows:
+  # Even horizontal layout
+  - layout: even-horizontal
+    panes:
+      - command: htop
+      - command: df -h
+      - command: free -h
+
+  # Even vertical layout
+  - layout: even-vertical
+    panes:
+      - command: git status
+      - command: git log --oneline -10
+
+  # Main vertical layout (one large pane on left)
+  - layout: main-vertical
+    panes:
+      - command: vim README.md
+      - command: npm test
+      - command: npm run lint
+
+  # Main horizontal layout (one large pane on top)
+  - layout: main-horizontal
+    panes:
+      - command: vim
+      - command: python3
+      - command: irb
+
+  # Tiled layout (arrange panes in a grid)
+  - layout: tiled
+    panes:
+      - command: top
+      - command: iostat 1
+      - command: vmstat 1
+      - command: netstat -an

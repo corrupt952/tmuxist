@@ -1,0 +1,44 @@
+# Combined features example
+# Using grid layouts, standard layouts, and pane sizes together
+
+name: development
+root: ~/projects/myapp
+windows:
+  # Grid layout for monitoring
+  - layout: "2x2"
+    panes:
+      - command: htop
+      - command: docker stats
+      - command: tail -f logs/app.log
+      - command: watch -n 1 'netstat -tuln | grep LISTEN'
+
+  # Main development window with custom sizes
+  - layout: main-vertical
+    panes:
+      - command: nvim .
+      - command: npm run dev
+        size: "35%"
+      - command: npm test -- --watch
+        size: "25%"
+
+  # Database and API testing
+  - layout: main-horizontal
+    panes:
+      - command: mysql -u root -p myapp_db
+      - command: http-prompt http://localhost:3000
+        size: "30%"
+
+  # Git workflow
+  - panes:
+      - command: tig  # Git log viewer
+      - command: watch -n 5 'git status -sb'
+        size: "20%"
+      - command: git log --graph --oneline --all
+        size: "30%"
+
+  # Simple grid for logs
+  - layout: "3x1"
+    panes:
+      - command: tail -f logs/access.log
+      - command: tail -f logs/error.log
+      - command: journalctl -f -u myapp
