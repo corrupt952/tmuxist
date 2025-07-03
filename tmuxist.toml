@@ -1,0 +1,14 @@
+name = "tmuxist"
+root = "."
+attach = true
+
+[[windows]]
+[[windows.panes]]
+command = "claude"
+
+[[windows]]
+[[windows.panes]]
+command = "claude"
+
+[[windows]]
+[[windows.panes]]
