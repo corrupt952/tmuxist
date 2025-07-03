@@ -228,6 +228,102 @@ func TestConfigurationPath_Priority(t *testing.T) {
 	test_helper.AssertEquals(t, filepath.Base(path), "tmuxist.toml")
 }
 
+func TestConfigurationPath_HiddenFiles(t *testing.T) {
+	// Create a temporary directory as working directory
+	tmpDir, err := ioutil.TempDir("", "tmuxist-test")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.RemoveAll(tmpDir)
+
+	// Change to temp directory
+	originalWd, _ := os.Getwd()
+	os.Chdir(tmpDir)
+	defer os.Chdir(originalWd)
+
+	// Test 1: Hidden YAML file takes priority over non-hidden TOML
+	ioutil.WriteFile("tmuxist.toml", []byte("name = \"toml\""), 0644)
+	ioutil.WriteFile(".tmuxist.yaml", []byte("name: hidden-yaml"), 0644)
+	path, err := ConfigurationPath()
+	if err != nil {
+		t.Fatal(err)
+	}
+	test_helper.AssertEquals(t, filepath.Base(path), ".tmuxist.yaml")
+
+	// Test 2: Non-hidden file takes priority over hidden file of same type
+	ioutil.WriteFile("tmuxist.yaml", []byte("name: yaml"), 0644)
+	path, err = ConfigurationPath()
+	if err != nil {
+		t.Fatal(err)
+	}
+	test_helper.AssertEquals(t, filepath.Base(path), "tmuxist.yaml")
+
+	// Clean up non-hidden yaml
+	os.Remove("tmuxist.yaml")
+
+	// Test 3: Hidden YAML takes priority when non-hidden YAML doesn't exist
+	path, err = ConfigurationPath()
+	if err != nil {
+		t.Fatal(err)
+	}
+	test_helper.AssertEquals(t, filepath.Base(path), ".tmuxist.yaml")
+
+	// Test 4: Hidden YML file
+	ioutil.WriteFile(".tmuxist.yml", []byte("name: hidden-yml"), 0644)
+	os.Remove(".tmuxist.yaml")
+	path, err = ConfigurationPath()
+	if err != nil {
+		t.Fatal(err)
+	}
+	test_helper.AssertEquals(t, filepath.Base(path), ".tmuxist.yml")
+
+	// Test 5: Hidden TOML file
+	ioutil.WriteFile(".tmuxist.toml", []byte("name = \"hidden-toml\""), 0644)
+	os.Remove(".tmuxist.yml")
+	os.Remove("tmuxist.toml")
+	path, err = ConfigurationPath()
+	if err != nil {
+		t.Fatal(err)
+	}
+	test_helper.AssertEquals(t, filepath.Base(path), ".tmuxist.toml")
+}
+
+func TestLoadFile_HiddenFiles(t *testing.T) {
+	// Create a temporary directory
+	tmpDir, err := ioutil.TempDir("", "tmuxist-test")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer os.RemoveAll(tmpDir)
+
+	// Test loading hidden YAML file
+	hiddenYamlContent := `name: "hidden-session"
+root: "/tmp/hidden"
+attach: false
+windows:
+  - panes:
+      - command: "ls -la"`
+
+	hiddenYamlPath := filepath.Join(tmpDir, ".tmuxist.yaml")
+	err = ioutil.WriteFile(hiddenYamlPath, []byte(hiddenYamlContent), 0644)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Load the hidden YAML file
+	config, err := LoadFile(hiddenYamlPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Assert configuration values
+	test_helper.AssertEquals(t, config.Name, "hidden-session")
+	test_helper.AssertEquals(t, config.Root, "/tmp/hidden")
+	test_helper.AssertEquals(t, *config.Attach, false)
+	test_helper.AssertEquals(t, len(config.Windows), 1)
+	test_helper.AssertEquals(t, config.Windows[0].Panes[0].Command, "ls -la")
+}
+
 func TestLoadFile_InvalidYAML(t *testing.T) {
 	// Create a temporary invalid YAML file
 	tmpDir, err := ioutil.TempDir("", "tmuxist-test")

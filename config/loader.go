@@ -54,8 +54,11 @@ func ConfigurationPath() (string, error) {
 	// Check for configuration files in order of preference
 	configFiles := []string{
 		"tmuxist.yaml",
+		".tmuxist.yaml",
 		"tmuxist.yml",
+		".tmuxist.yml",
 		"tmuxist.toml",
+		".tmuxist.toml",
 	}
 
 	for _, configFile := range configFiles {

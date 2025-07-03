@@ -49,12 +49,23 @@ func (cmd *InitCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interfa
 		return subcommands.ExitFailure
 	}
 	
-	var cfgPath string
+	var filename string
 	var configContent string
 	
+	// Determine filename based on format (always hidden)
 	switch cmd.format {
-	case "yaml", "yml":
-		cfgPath = filepath.Join(currentPath, "tmuxist.yaml")
+	case "yaml":
+		filename = ".tmuxist.yaml"
+		configContent = `name: "{{.Name}}"
+root: "{{.Root}}"
+attach: {{.Attach}}
+
+windows:
+  - panes:
+      - command: "echo 'hello'"
+`
+	case "yml":
+		filename = ".tmuxist.yml"
 		configContent = `name: "{{.Name}}"
 root: "{{.Root}}"
 attach: {{.Attach}}
@@ -64,7 +75,7 @@ windows:
       - command: "echo 'hello'"
 `
 	default:
-		cfgPath = filepath.Join(currentPath, "tmuxist.toml")
+		filename = ".tmuxist.toml"
 		configContent = `name = "{{.Name}}"
 root = "{{.Root}}"
 attach = {{.Attach}}
@@ -74,6 +85,8 @@ attach = {{.Attach}}
 command = "echo 'hello'"
 `
 	}
+	
+	cfgPath := filepath.Join(currentPath, filename)
 
 	if _, err := os.Stat(cfgPath); err == nil {
 		logger.Warn(cfgPath + " already exists.")
