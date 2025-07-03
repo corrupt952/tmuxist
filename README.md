@@ -47,6 +47,124 @@ When you run this command, the session defined in `tmuxist.toml` is deleted.
 tmuxist kill
 ```
 
+## Layouts
+
+tmuxist supports all standard tmux layouts plus a new grid notation for easy pane arrangement.
+
+### Standard Layouts
+
+#### even-horizontal
+Panes are spread out evenly from left to right.
+```
+┌─────────┬─────────┬─────────┐
+│         │         │         │
+│  Pane1  │  Pane2  │  Pane3  │
+│         │         │         │
+└─────────┴─────────┴─────────┘
+```
+
+#### even-vertical
+Panes are spread out evenly from top to bottom.
+```
+┌─────────────────┐
+│     Pane1       │
+├─────────────────┤
+│     Pane2       │
+├─────────────────┤
+│     Pane3       │
+└─────────────────┘
+```
+
+#### main-horizontal
+One large pane on top, others spread out evenly below.
+```
+┌─────────────────┐
+│                 │
+│   Main Pane     │
+│                 │
+├────────┬────────┤
+│ Pane2  │ Pane3  │
+└────────┴────────┘
+```
+
+#### main-vertical
+One large pane on the left, others spread out evenly on the right.
+```
+┌─────────┬───────┐
+│         │ Pane2 │
+│  Main   ├───────┤
+│  Pane   │ Pane3 │
+│         ├───────┤
+│         │ Pane4 │
+└─────────┴───────┘
+```
+
+#### tiled
+Panes are spread out as evenly as possible in both rows and columns.
+```
+┌────────┬────────┐
+│ Pane1  │ Pane2  │
+├────────┼────────┤
+│ Pane3  │ Pane4  │
+└────────┴────────┘
+```
+
+### Grid Notation (New Feature)
+
+Use simple grid notation like "2x2", "3x2" for easy pane arrangement.
+
+#### "2x2" - 2 columns × 2 rows
+```
+┌────────┬────────┐
+│ Pane1  │ Pane2  │
+├────────┼────────┤
+│ Pane3  │ Pane4  │
+└────────┴────────┘
+```
+
+#### "3x2" - 3 columns × 2 rows
+```
+┌──────┬──────┬──────┐
+│ Pane1│ Pane2│ Pane3│
+├──────┼──────┼──────┤
+│ Pane4│ Pane5│ Pane6│
+└──────┴──────┴──────┘
+```
+
+#### "1x4" - 1 column × 4 rows
+```
+┌─────────────────┐
+│     Pane1       │
+├─────────────────┤
+│     Pane2       │
+├─────────────────┤
+│     Pane3       │
+├─────────────────┤
+│     Pane4       │
+└─────────────────┘
+```
+
+### Example Usage
+
+```yaml
+# Using standard layout
+windows:
+  - layout: main-vertical
+    panes:
+      - command: vim
+      - command: npm run dev
+      - command: npm test
+
+# Using grid notation
+windows:
+  - layout: "2x2"
+    panes:
+      - command: htop
+      - command: docker stats
+      - command: tail -f app.log
+      - command: watch date
+```
+
 ## Architecture
 
 `tmuxist` reads `tmuxist.toml` in the directory where the command is executed and manages tmux sessions.  
