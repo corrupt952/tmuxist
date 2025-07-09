@@ -95,6 +95,24 @@ func TestStartRenderer_RenderWindow_WithLayout(t *testing.T) {
 	test_helper.AssertEquals(t, actual, expected)
 }
 
+func TestStartRenderer_RenderWindow_WithName(t *testing.T) {
+	r := StartRenderer{&config.Config{}}
+	w := config.Window{Name: "Development"}
+
+	actual := r.renderWindow(&w, true)
+	expected := "WINDOW_NO=$SESSION_NO\ntmux rename-window -t $WINDOW_NO Development\n\n"
+	test_helper.AssertEquals(t, actual, expected)
+}
+
+func TestStartRenderer_RenderWindow_WithName_IsNotFirst(t *testing.T) {
+	r := StartRenderer{&config.Config{}}
+	w := config.Window{Name: "Testing"}
+
+	actual := r.renderWindow(&w, false)
+	expected := "WINDOW_NO=$(tmux new-window -t $SESSION_NO -a -P -n Testing)\n\n"
+	test_helper.AssertEquals(t, actual, expected)
+}
+
 func TestStartRenderer_RenderWindow_SynchronizePanes(t *testing.T) {
 	r := StartRenderer{&config.Config{}}
 	sync := true

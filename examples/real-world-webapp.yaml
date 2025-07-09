@@ -7,7 +7,8 @@ attach: true
 
 windows:
   # Frontend development
-  - layout: main-vertical
+  - name: "Frontend"
+    layout: main-vertical
     panes:
       - command: |
           cd frontend
@@ -23,7 +24,8 @@ windows:
         size: "20%"
 
   # Backend development
-  - layout: main-horizontal
+  - name: "Backend"
+    layout: main-horizontal
     panes:
       - command: |
           cd backend
@@ -38,7 +40,8 @@ windows:
         size: "25%"
 
   # Database and services
-  - layout: "2x2"
+  - name: "Database"
+    layout: "2x2"
     panes:
       - command: docker-compose logs -f db
       - command: docker-compose logs -f redis
@@ -46,7 +49,8 @@ windows:
       - command: pgcli postgresql://localhost/webapp_dev
 
   # Monitoring and logs
-  - layout: tiled
+  - name: "Monitoring"
+    layout: tiled
     panes:
       - command: tail -f logs/application.log
       - command: tail -f logs/error.log
@@ -54,7 +58,8 @@ windows:
       - command: watch -n 2 'curl -s localhost:3000/health | jq .'
 
   # Git and deployment
-  - layout: main-vertical
+  - name: "Git & Deploy"
+    layout: main-vertical
     panes:
       - command: tig
       - command: |

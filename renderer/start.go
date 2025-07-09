@@ -59,8 +59,16 @@ func (r *StartRenderer) renderWindow(w *config.Window, isFirst bool) string {
 
 	if isFirst {
 		s += "WINDOW_NO=$SESSION_NO\n"
+		// Rename the first window if name is specified
+		if w.Name != "" {
+			s += fmt.Sprintf("tmux rename-window -t $WINDOW_NO %s\n", shellquote.Join(w.Name))
+		}
 	} else {
-		s += fmt.Sprintf("WINDOW_NO=%s\n", shell_helper.CommandSubstitution("tmux new-window -t $SESSION_NO -a -P"))
+		nameOpt := ""
+		if w.Name != "" {
+			nameOpt = fmt.Sprintf(" -n %s", shellquote.Join(w.Name))
+		}
+		s += fmt.Sprintf("WINDOW_NO=%s\n", shell_helper.CommandSubstitution(fmt.Sprintf("tmux new-window -t $SESSION_NO -a -P%s", nameOpt)))
 	}
 
 	for i, p := range w.Panes {

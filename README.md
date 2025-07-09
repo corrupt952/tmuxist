@@ -230,16 +230,19 @@ attach: true
 
 windows:
   # Window 1
-  - panes:
+  - name: "Monitor"
+    panes:
       - command: htop
 
   # Window 2
-  - panes:
+  - name: "Development"
+    panes:
       - command: cd ~/Repo/corrupt952/tmuxist
       - command: ""  # Empty pane
 
   # Window 3
-  - layout: tiled
+  - name: "Servers"
+    layout: tiled
     sync: true
     panes:
       - command: ""  # Empty pane
@@ -277,16 +280,19 @@ root    = '.'
 attach  = true
 
 [[windows]]
+name = "Monitor"
 [[windows.panes]]
 command = "htop"
 
 [[windows]]
+name = "Development"
 [[windows.panes]]
 command = "cd ~/Repo/corrupt952/tmuxist"
 [[windows.panes]]
 command = ""
 
 [[windows]]
+name = "Servers"
 layout = "tiled"
 sync = true
 [[windows.panes]]

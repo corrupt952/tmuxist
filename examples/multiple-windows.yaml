@@ -5,13 +5,16 @@ name: multi-window
 root: ~/projects
 windows:
   # First window - Editor
-  - panes:
+  - name: "Editor"
+    panes:
       - command: vim
 
   # Second window - Server
-  - panes:
+  - name: "Server"
+    panes:
       - command: npm run dev
 
   # Third window - Logs
-  - panes:
+  - name: "Logs"
+    panes:
       - command: tail -f /var/log/system.log

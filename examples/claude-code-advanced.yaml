@@ -7,7 +7,8 @@ attach: true
 
 windows:
   # Frontend development with Claude
-  - layout: main-vertical
+  - name: "Frontend"
+    layout: main-vertical
     panes:
       - command: |
           cd frontend
@@ -25,7 +26,8 @@ windows:
         size: "20%"
 
   # Backend development with Claude
-  - layout: main-vertical
+  - name: "Backend"
+    layout: main-vertical
     panes:
       - command: |
           cd backend
@@ -43,7 +45,8 @@ windows:
         size: "20%"
 
   # DevOps and Infrastructure
-  - layout: "2x2"
+  - name: "DevOps"
+    layout: "2x2"
     panes:
       - command: |
           echo "=== Claude for DevOps ==="
@@ -55,7 +58,8 @@ windows:
       - command: gh run list --limit 5
 
   # Code Review and Documentation
-  - layout: main-horizontal
+  - name: "Review"
+    layout: main-horizontal
     panes:
       - command: |
           echo "=== Claude for Code Review ==="
@@ -70,7 +74,8 @@ windows:
         size: "35%"
 
   # Learning and Research
-  - layout: even-vertical
+  - name: "Learning"
+    layout: even-vertical
     panes:
       - command: |
           echo "=== Claude for Learning ==="
@@ -86,7 +91,8 @@ windows:
       - command: ""  # Terminal for trying out examples
 
   # Debugging Station
-  - layout: main-vertical
+  - name: "Debug"
+    layout: main-vertical
     sync: false
     panes:
       - command: |

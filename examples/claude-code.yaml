@@ -7,13 +7,16 @@ attach: true
 
 windows:
   # Main Claude window for coding
-  - panes:
+  - name: "Claude Code"
+    panes:
       - command: claude
 
   # Secondary Claude for research/documentation
-  - panes:
+  - name: "Claude Docs"
+    panes:
       - command: claude
 
   # Terminal for testing and git operations
-  - panes:
+  - name: "Terminal"
+    panes:
       - command: ""  # Empty shell for manual commands
