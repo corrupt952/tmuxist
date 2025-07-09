@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.5] - 2025-07-09
+
+### Added
+
+- Window name support using `name` field in window configuration
+- Custom window names are set using tmux's rename-window and new-window -n commands
+- Example configuration demonstrating window naming feature
+
 ## [1.2.4] - 2025-07-09
 
 ### Added
