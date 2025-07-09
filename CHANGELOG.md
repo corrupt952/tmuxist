@@ -7,8 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.4] - 2025-07-09
+
 ### Added
 
+- Session-level environment variables support using `env` field in root configuration
+- Environment variables are applied to all windows and panes in the session using tmux's `-e` option
+- Example configuration for environment variables usage
 - Comprehensive example configurations directory with various use cases
 - Documentation for layouts with ASCII art visualization
 
