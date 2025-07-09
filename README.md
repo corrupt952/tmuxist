@@ -248,6 +248,25 @@ windows:
       - command: ""  # Empty pane
 ```
 
+#### Environment Variables (tmux 3.0+)
+
+You can set environment variables for the entire session using the `env` field at the root level:
+
+```yaml
+name: tmuxist
+root: .
+attach: true
+env:
+  NODE_ENV: development
+  PORT: "3000"
+  DEBUG: "app:*"
+
+windows:
+  - panes:
+      - command: npm run dev
+      - command: npm test
+```
+
 #### TOML Configuration Example
 
 If you prefer TOML format, create `tmuxist.toml`:
@@ -278,4 +297,21 @@ command = ""
 command = ""
 [[windows.panes]]
 command = ""
+```
+
+Environment variables in TOML:
+
+```toml
+name = "tmuxist"
+root = "."
+attach = true
+
+[env]
+NODE_ENV = "development"
+PORT = "3000"
+DEBUG = "app:*"
+
+[[windows]]
+[[windows.panes]]
+command = "npm run dev"
 ```

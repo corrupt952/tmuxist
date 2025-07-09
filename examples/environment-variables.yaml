@@ -1,0 +1,34 @@
+# Environment Variables Example
+# This example demonstrates how to set environment variables for the entire session
+# using tmux 3.0+ -e option support
+
+name: env-demo
+root: .
+attach: true
+env:
+  MY_VAR: "Hello World"
+  NODE_ENV: development
+  PORT: "3000"
+
+windows:
+  # Simple demonstration - just echo the environment variables
+  - layout: even-horizontal
+    panes:
+      - command: |
+          echo "=== Pane 1 ==="
+          echo "MY_VAR: $MY_VAR"
+          echo "NODE_ENV: $NODE_ENV"
+          echo "PORT: $PORT"
+      
+      - command: |
+          echo "=== Pane 2 ==="
+          echo "MY_VAR is: $MY_VAR"
+          echo "Running in $NODE_ENV mode"
+          echo "Port is $PORT"
+      
+      - command: |
+          echo "=== Pane 3 ==="
+          echo "All custom env vars:"
+          echo "- MY_VAR=$MY_VAR"
+          echo "- NODE_ENV=$NODE_ENV"
+          echo "- PORT=$PORT"

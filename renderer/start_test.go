@@ -2,6 +2,7 @@ package renderer
 
 import (
 	"os"
+	"strings"
 	"testing"
 
 	"tmuxist/config"
@@ -36,6 +37,26 @@ func TestStartRenderer_Render_WithName(t *testing.T) {
 	actual := r.Render()
 	expected := "SESSION_NO=$(tmux new-session -dP -s tmuxist)\n\ntmux attach-session -t $SESSION_NO\n"
 	test_helper.AssertEquals(t, actual, expected)
+}
+
+func TestStartRenderer_Render_WithEnv(t *testing.T) {
+	r := StartRenderer{&config.Config{
+		Name: "test-session",
+		Env: map[string]string{
+			"NODE_ENV": "development",
+			"PORT":     "3000",
+		},
+	}}
+
+	actual := r.Render()
+	// Check that environment variables are included in new-session command
+	// Note: map iteration order is not guaranteed
+	containsEnv1 := strings.Contains(actual, "-e NODE_ENV=development") && strings.Contains(actual, "-e PORT=3000")
+	containsEnv2 := strings.Contains(actual, "-e PORT=3000") && strings.Contains(actual, "-e NODE_ENV=development")
+	
+	if !containsEnv1 && !containsEnv2 {
+		t.Errorf("Expected output to contain environment variables, but got: %v", actual)
+	}
 }
 
 func TestStartRenderer_Render_IsNotAttach(t *testing.T) {
@@ -182,6 +203,7 @@ tmux send-keys -t $PANE_NO htop C-m
 `
 	test_helper.AssertEquals(t, actual, expected)
 }
+
 
 func TestStartRenderer_RenderWindow_WithPaneSizes(t *testing.T) {
 	r := StartRenderer{&config.Config{}}
