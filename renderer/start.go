@@ -28,7 +28,18 @@ func (r *StartRenderer) Render() string {
 	if c.Name != "" {
 		name = fmt.Sprintf("-s %s", c.Name)
 	}
-	s += fmt.Sprintf("SESSION_NO=%s\n\n", shell_helper.CommandSubstitution(fmt.Sprintf("tmux new-session -dP %s", name)))
+	
+	// Add environment variables if specified
+	envOpts := ""
+	if len(c.Env) > 0 {
+		envParts := []string{}
+		for k, v := range c.Env {
+			envParts = append(envParts, fmt.Sprintf("-e %s=%s", k, shellquote.Join(v)))
+		}
+		envOpts = " " + strings.Join(envParts, " ")
+	}
+	
+	s += fmt.Sprintf("SESSION_NO=%s\n\n", shell_helper.CommandSubstitution(fmt.Sprintf("tmux new-session -dP %s%s", name, envOpts)))
 
 	for i, w := range c.Windows {
 		s += r.renderWindow(&w, i == 0)
