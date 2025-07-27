@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.6] - 2025-07-28
+
+### Fixed
+
+- Handle tmux server not running gracefully when checking for existing sessions
+- Fix sporadic "exit status 1" error on startup when tmux server is not running
+
 ## [1.2.5] - 2025-07-09
 
 ### Added
