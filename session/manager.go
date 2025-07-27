@@ -15,7 +15,9 @@ func (d *DefaultSessionLister) ListSessions() ([]string, error) {
 	r := renderer.ListSessionsRenderer{}
 	output, err := shell_helper.ExecWithOutput(r.Render())
 	if err != nil {
-		return nil, err
+		// If tmux server is not running or other errors occur,
+		// return empty list instead of error
+		return []string{}, nil
 	}
 
 	lines := strings.Split(output, "\n")
