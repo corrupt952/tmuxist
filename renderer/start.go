@@ -28,7 +28,7 @@ func (r *StartRenderer) Render() string {
 	if c.Name != "" {
 		name = fmt.Sprintf("-s %s", c.Name)
 	}
-	
+
 	// Add environment variables if specified
 	envOpts := ""
 	if len(c.Env) > 0 {
@@ -38,7 +38,7 @@ func (r *StartRenderer) Render() string {
 		}
 		envOpts = " " + strings.Join(envParts, " ")
 	}
-	
+
 	s += fmt.Sprintf("SESSION_NO=%s\n\n", shell_helper.CommandSubstitution(fmt.Sprintf("tmux new-session -dP %s%s", name, envOpts)))
 
 	for i, w := range c.Windows {

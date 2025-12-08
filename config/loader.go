@@ -40,6 +40,9 @@ func LoadFile(path string) (*Config, error) {
 		}
 	}
 
+	// Sanitize session name to match tmux's behavior
+	c.Name = SanitizeSessionName(c.Name)
+
 	return &c, nil
 }
 

@@ -373,3 +373,84 @@ windows = []`
 		t.Fatal("Expected error for invalid TOML, but got nil")
 	}
 }
+
+func TestLoadFile_SanitizesSessionName(t *testing.T) {
+	tests := []struct {
+		name         string
+		configName   string
+		expectedName string
+		format       string
+	}{
+		{
+			name:         "YAML with period in name",
+			configName:   "my.project",
+			expectedName: "my_project",
+			format:       "yaml",
+		},
+		{
+			name:         "YAML with colon in name",
+			configName:   "my:project",
+			expectedName: "my_project",
+			format:       "yaml",
+		},
+		{
+			name:         "TOML with period in name",
+			configName:   "example.com",
+			expectedName: "example_com",
+			format:       "toml",
+		},
+		{
+			name:         "TOML with colon in name",
+			configName:   "host:port",
+			expectedName: "host_port",
+			format:       "toml",
+		},
+		{
+			name:         "name without special characters unchanged",
+			configName:   "my-project",
+			expectedName: "my-project",
+			format:       "yaml",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tmpDir, err := ioutil.TempDir("", "tmuxist-test")
+			if err != nil {
+				t.Fatal(err)
+			}
+			defer os.RemoveAll(tmpDir)
+
+			var content string
+			var filename string
+			if tt.format == "yaml" {
+				content = `name: "` + tt.configName + `"
+root: "."
+windows:
+  - panes:
+      - command: "echo test"`
+				filename = "test.yaml"
+			} else {
+				content = `name = "` + tt.configName + `"
+root = "."
+[[windows]]
+[[windows.panes]]
+command = "echo test"`
+				filename = "test.toml"
+			}
+
+			configPath := filepath.Join(tmpDir, filename)
+			err = ioutil.WriteFile(configPath, []byte(content), 0644)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			config, err := LoadFile(configPath)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			test_helper.AssertEquals(t, config.Name, tt.expectedName)
+		})
+	}
+}

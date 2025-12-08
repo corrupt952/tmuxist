@@ -53,7 +53,7 @@ func TestStartRenderer_Render_WithEnv(t *testing.T) {
 	// Note: map iteration order is not guaranteed
 	containsEnv1 := strings.Contains(actual, "-e NODE_ENV=development") && strings.Contains(actual, "-e PORT=3000")
 	containsEnv2 := strings.Contains(actual, "-e PORT=3000") && strings.Contains(actual, "-e NODE_ENV=development")
-	
+
 	if !containsEnv1 && !containsEnv2 {
 		t.Errorf("Expected output to contain environment variables, but got: %v", actual)
 	}
@@ -221,7 +221,6 @@ tmux send-keys -t $PANE_NO htop C-m
 `
 	test_helper.AssertEquals(t, actual, expected)
 }
-
 
 func TestStartRenderer_RenderWindow_WithPaneSizes(t *testing.T) {
 	r := StartRenderer{&config.Config{}}
