@@ -18,6 +18,19 @@ brew tap corrupt952/tmuxist
 brew install tmuxist
 ```
 
+### Nix
+
+```sh
+# Run without installing (builds current main)
+nix run github:corrupt952/tmuxist -- --help
+
+# Install into your profile
+nix profile install github:corrupt952/tmuxist
+
+# Pin to a release tag or any commit (available from the tag after this feature is released)
+nix profile install github:corrupt952/tmuxist/vX.Y.Z
+```
+
 ## Commands
 
 ### tmuxist init
