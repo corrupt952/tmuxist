@@ -44,3 +44,10 @@ pkg/
 !.vscode/*.code-snippets
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,go
+
+# Nix / direnv
+.direnv/
+result
+
+# GoReleaser
+dist/
