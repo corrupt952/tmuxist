@@ -1,3 +1,5 @@
+version: 2
+
 builds:
   - ldflags: -s -w -X "tmuxist/command.Version={{.Version}}"
     goos:
