@@ -1,7 +1,18 @@
+# https://goreleaser.com
+# Shared by corrupt952/sallyport, tmuxist, closest and xckit; keep the four
+# copies identical.
 version: 2
 
 builds:
-  - ldflags: -s -w -X "tmuxist/command.Version={{.Version}}"
+  - env:
+      - CGO_ENABLED=0
+    flags:
+      - -trimpath
+    # Version lives in the command package, so the link symbol is the full
+    # import path. Keep in sync with the ldflags in flake.nix and Makefile.
+    ldflags:
+      - -s -w -X {{ .ModulePath }}/command.Version={{ .Version }}
+    mod_timestamp: "{{ .CommitTimestamp }}"
     goos:
       - linux
       - darwin
@@ -9,8 +20,30 @@ builds:
       - amd64
       - arm64
 
-# Packging only binary
-# FYI: https://goreleaser.com/customization/archive/#packaging-only-the-binaries
 archives:
+  # The file names stay at GoReleaser's default
+  # (<name>_<version>_<os>_<arch>.tar.gz): the aqua registry entry for closest
+  # depends on them. The binary stays at the archive root; LICENSE ships with
+  # it as the MIT license asks.
   - files:
-      - none*
+      - LICENSE
+      - README.md
+
+changelog:
+  use: github
+  sort: asc
+  groups:
+    - title: Features
+      regexp: '^.*?feat(\(.+\))??!?:.+$'
+      order: 0
+    - title: Bug fixes
+      regexp: '^.*?fix(\(.+\))??!?:.+$'
+      order: 1
+    - title: Dependencies
+      regexp: '^.*?chore\(deps\)!?:.+$'
+      order: 2
+    - title: Others
+      order: 999
+
+release:
+  prerelease: auto
