@@ -3,7 +3,7 @@ package config
 import (
 	"testing"
 
-	test_helper "tmuxist/helper/test"
+	test_helper "github.com/corrupt952/tmuxist/helper/test"
 )
 
 func TestSanitizeSessionName(t *testing.T) {

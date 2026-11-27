@@ -3,8 +3,8 @@ package renderer
 import (
 	"testing"
 
-	"tmuxist/config"
-	test_helper "tmuxist/helper/test"
+	"github.com/corrupt952/tmuxist/config"
+	test_helper "github.com/corrupt952/tmuxist/helper/test"
 )
 
 func TestAttachRenderer_Render(t *testing.T) {

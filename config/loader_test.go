@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	test_helper "tmuxist/helper/test"
+	test_helper "github.com/corrupt952/tmuxist/helper/test"
 )
 
 func TestLoadFile_YAML(t *testing.T) {

@@ -3,7 +3,7 @@ package renderer
 import (
 	"fmt"
 
-	"tmuxist/config"
+	"github.com/corrupt952/tmuxist/config"
 )
 
 // AttachRenderer represents startup shell script.

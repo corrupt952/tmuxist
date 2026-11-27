@@ -4,7 +4,7 @@ import (
 	"flag"
 	"os"
 
-	"tmuxist/config"
+	"github.com/corrupt952/tmuxist/config"
 )
 
 // ConfigCommand is a base struct for commands that need configuration file
