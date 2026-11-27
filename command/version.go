@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"runtime/debug"
 
 	"github.com/google/subcommands"
 )
@@ -11,6 +12,16 @@ import (
 var (
 	Version string
 )
+
+func version() string {
+	if Version != "" {
+		return Version
+	}
+	if info, ok := debug.ReadBuildInfo(); ok && info.Main.Version != "" {
+		return info.Main.Version
+	}
+	return "unknown"
+}
 
 // VersionCommand represents a version command.
 type VersionCommand struct{}
@@ -36,6 +47,6 @@ func (*VersionCommand) SetFlags(f *flag.FlagSet) {
 
 // Execute executes print version and returns an ExitStatus.
 func (*VersionCommand) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
-	fmt.Println(Version)
+	fmt.Println(version())
 	return subcommands.ExitSuccess
 }
