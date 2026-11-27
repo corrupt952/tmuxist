@@ -6,9 +6,9 @@ import (
 
 	"github.com/google/subcommands"
 
-	shell_helper "tmuxist/helper/shell"
-	"tmuxist/logger"
-	"tmuxist/renderer"
+	shell_helper "github.com/corrupt952/tmuxist/helper/shell"
+	"github.com/corrupt952/tmuxist/logger"
+	"github.com/corrupt952/tmuxist/renderer"
 )
 
 // KillCommand represents a kill tmux session command.

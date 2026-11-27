@@ -9,7 +9,7 @@ import (
 	"github.com/pelletier/go-toml/v2"
 	"gopkg.in/yaml.v3"
 
-	"tmuxist/logger"
+	"github.com/corrupt952/tmuxist/logger"
 )
 
 // LoadFile returns *config.Config by path.

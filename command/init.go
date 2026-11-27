@@ -11,8 +11,8 @@ import (
 
 	"github.com/google/subcommands"
 
-	"tmuxist/config"
-	"tmuxist/logger"
+	"github.com/corrupt952/tmuxist/config"
+	"github.com/corrupt952/tmuxist/logger"
 )
 
 // InitCommand represents a create configuration command.

@@ -28,7 +28,7 @@
             src = pkgs.lib.cleanSource self;
             vendorHash = "sha256-M7nS+VeKXot/2ljQ30it2KYfwcIYmKPI13wwUWA1Omo=";
             # Keep in sync with .goreleaser.yml.
-            ldflags = [ "-s" "-w" "-X" "tmuxist/command.Version=${version}" ];
+            ldflags = [ "-s" "-w" "-X" "github.com/corrupt952/tmuxist/command.Version=${version}" ];
             meta.mainProgram = "tmuxist";
           };
         });

@@ -3,7 +3,8 @@ package renderer
 import (
 	"strings"
 	"testing"
-	"tmuxist/config"
+
+	"github.com/corrupt952/tmuxist/config"
 )
 
 func TestStartRenderer_FullExample_WithGridLayout(t *testing.T) {

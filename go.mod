@@ -1,4 +1,4 @@
-module tmuxist
+module github.com/corrupt952/tmuxist
 
 go 1.21.0
 
