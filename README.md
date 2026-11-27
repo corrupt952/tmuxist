@@ -11,11 +11,10 @@ You can define tmux session in `.tmuxist.yaml` (or `.tmuxist.yml`, `tmuxist.toml
 
 Download tar.gz on [Latest release](https://github.com/corrupt952/tmuxist/releases/latest).
 
-### Homebrew
+### go install
 
 ```sh
-brew tap corrupt952/tmuxist
-brew install tmuxist
+go install github.com/corrupt952/tmuxist@latest
 ```
 
 ### Nix
